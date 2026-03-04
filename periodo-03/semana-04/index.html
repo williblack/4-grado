@@ -1,1 +1,659 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Aventura en Paint! - Grado 4</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #00C9FF 0%, #92FE9D 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* 3D Flip Cards CSS */
+        .flip-card {
+            background-color: transparent;
+            width: 100%;
+            height: 250px;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+        .flip-card-front {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 4px solid white;
+        }
+        .flip-card-back {
+            background: #6366f1;
+            color: white;
+            transform: rotateY(180deg);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+            border: 4px solid #818cf8;
+        }
+
+        /* Canvas Drawing Area */
+        #paintCanvas {
+            cursor: crosshair;
+            background-color: white;
+            border-radius: 1rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* Floating Animation */
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); }
+        ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+    </style>
+</head>
+<body class="text-slate-800 pb-10 antialiased">
+
+    <!-- ==========================================
+         BARRA DE NAVEGACIÓN OBLIGATORIA
+    =========================================== -->
+    <div class="max-w-6xl mx-auto flex justify-end gap-3 mt-4 mb-2 px-4 relative z-50">
+        <a href="../../../index.html"
+           class="bg-slate-800/80 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 hover:bg-slate-900 transition-all duration-300 backdrop-blur border border-slate-600 flex items-center gap-2 font-bold text-sm">
+           <i class="fas fa-home"></i> Inicio (Grado)
+        </a>
+      
+        <a href="../../index.html"
+           class="bg-purple-600/90 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 hover:bg-purple-700 transition-all duration-300 backdrop-blur border border-purple-400 flex items-center gap-2 font-bold text-sm">
+           <i class="fas fa-folder-open"></i> Menú del Periodo
+        </a>
+      
+        <button type="button" onclick="copiarEnlace()"
+           class="bg-emerald-500/90 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 hover:bg-emerald-600 transition-all duration-300 backdrop-blur border border-emerald-400 flex items-center gap-2 font-bold text-sm">
+           <i class="fas fa-link"></i> Copiar enlace
+        </button>
+    </div>
+      
+    <div id="toastCopiado" class="fixed top-6 right-6 hidden bg-slate-900/90 text-white px-6 py-4 rounded-2xl shadow-2xl backdrop-blur border-l-4 border-emerald-500 z-[100] transform transition-all flex items-center gap-3 font-bold text-lg">
+        <i class="fas fa-check-circle text-emerald-400 text-2xl"></i> ¡Enlace copiado al portapapeles!
+    </div>
+
+    <!-- ==========================================
+         SECCIÓN 1: HERO (Encabezado)
+    =========================================== -->
+    <header class="max-w-6xl mx-auto px-4 mt-4 mb-10">
+        <div class="glass-panel rounded-3xl p-8 text-center relative overflow-hidden">
+            <!-- Decorative background elements -->
+            <div class="absolute -top-20 -left-20 w-48 h-48 bg-yellow-300 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
+            <div class="absolute -bottom-20 -right-20 w-48 h-48 bg-pink-400 rounded-full mix-blend-multiply filter blur-2xl opacity-50"></div>
+            
+            <h3 class="text-indigo-800 font-bold text-lg mb-2 tracking-widest uppercase">Colegio Santa Mariana de Jesús</h3>
+            <h1 class="text-5xl md:text-6xl font-black text-slate-800 mb-4 drop-shadow-sm">
+                🎨 ¡Aventura en <span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-600">Paint!</span>
+            </h1>
+            <p class="text-xl md:text-2xl font-bold text-slate-600 mb-6">Prof. William Fdo Bernal</p>
+            
+            <div class="bg-white/60 rounded-2xl p-6 max-w-3xl mx-auto shadow-sm border border-white">
+                <h2 class="text-2xl font-bold text-emerald-600 mb-2"><i class="fas fa-bullseye"></i> Nuestro Objetivo Hoy</h2>
+                <p class="text-lg text-slate-700">Explorar la interfaz de Paint, reconocer sus herramientas mágicas (formas, pinceles, colores) y crear nuestra primera obra de arte digital paso a paso.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         SECCIÓN 2: MÓDULOS DE APRENDIZAJE
+    =========================================== -->
+    <main class="max-w-6xl mx-auto px-4 space-y-12">
+
+        <!-- MOD-C: ZONA DE ANALOGÍAS (Tarjetas 3D) -->
+        <section class="mb-12">
+            <h2 class="text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-white text-pink-500 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">1</span> 
+                Conoce tus Herramientas (Pasa el ratón)
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Tarjeta 1: Formas -->
+                <div class="flip-card float-anim" style="animation-delay: 0s;">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-shapes text-6xl text-blue-500 mb-4"></i>
+                            <h3 class="text-2xl font-bold text-slate-800">Formas Básicas</h3>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-blue-500 to-blue-700">
+                            <i class="fas fa-cube text-4xl mb-3"></i>
+                            <p class="text-lg font-bold">¡Construye el mundo!</p>
+                            <p class="text-sm mt-2">Usa círculos, cuadrados y triángulos para dibujar casas, soles o carros perfectos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Relleno -->
+                <div class="flip-card float-anim" style="animation-delay: 0.2s;">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-fill-drip text-6xl text-emerald-500 mb-4"></i>
+                            <h3 class="text-2xl font-bold text-slate-800">Relleno de Color</h3>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-emerald-500 to-emerald-700">
+                            <i class="fas fa-paint-roller text-4xl mb-3"></i>
+                            <p class="text-lg font-bold">¡El famoso Baldecito!</p>
+                            <p class="text-sm mt-2">Pinta espacios cerrados en un segundo. ¡Cuidado que no haya huecos en tus líneas!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Pinceles -->
+                <div class="flip-card float-anim" style="animation-delay: 0.4s;">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <i class="fas fa-paint-brush text-6xl text-purple-500 mb-4"></i>
+                            <h3 class="text-2xl font-bold text-slate-800">Pinceles</h3>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-purple-500 to-purple-700">
+                            <i class="fas fa-palette text-4xl mb-3"></i>
+                            <p class="text-lg font-bold">¡Trazo Libre!</p>
+                            <p class="text-sm mt-2">Dibuja como si tuvieras crayones, acuarelas o marcadores de verdad en la pantalla.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4: Texto y Guardar -->
+                <div class="flip-card float-anim" style="animation-delay: 0.6s;">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="flex gap-4 text-6xl text-pink-500 mb-4">
+                                <i class="fas fa-font"></i>
+                                <i class="fas fa-save"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-slate-800">Texto y Guardar</h3>
+                        </div>
+                        <div class="flip-card-back bg-gradient-to-br from-pink-500 to-pink-700">
+                            <i class="fas fa-keyboard text-4xl mb-3"></i>
+                            <p class="text-lg font-bold">¡Firma y Guarda!</p>
+                            <p class="text-sm mt-2">Usa la letra 'A' para escribir tu nombre, y NUNCA olvides guardar antes de salir.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MOD-A: SIMULADOR CONCEPTUAL (Mini-Paint) -->
+        <section class="glass-panel p-6 md:p-8 rounded-3xl relative z-10 shadow-2xl">
+            <h2 class="text-3xl font-black text-slate-800 mb-6 flex items-center gap-3">
+                <span class="bg-indigo-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg">2</span> 
+                Laboratorio de Práctica (Mini-Paint)
+            </h2>
+            
+            <p class="text-lg mb-6 text-slate-700 font-semibold bg-white/50 p-4 rounded-xl border border-white">
+                Antes de usar el programa real, ¡dibuja libremente aquí! Selecciona un color, un tamaño de pincel y usa el ratón sobre el lienzo blanco.
+            </p>
+
+            <div class="flex flex-col lg:flex-row gap-6">
+                <!-- Herramientas -->
+                <div class="bg-slate-100 p-6 rounded-2xl shadow-inner border-2 border-slate-200 lg:w-1/4 flex flex-col gap-6">
+                    
+                    <div>
+                        <h4 class="font-black text-slate-700 mb-3 uppercase tracking-wider text-sm"><i class="fas fa-palette"></i> Colores</h4>
+                        <div class="flex flex-wrap gap-3" id="colorPalette">
+                            <!-- JS will generate color buttons here -->
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-black text-slate-700 mb-3 uppercase tracking-wider text-sm"><i class="fas fa-ruler-horizontal"></i> Grosor del Pincel</h4>
+                        <input type="range" id="brushSize" min="1" max="20" value="5" class="w-full accent-indigo-600">
+                        <div class="text-center font-bold text-slate-500 mt-1" id="brushSizeLabel">5px</div>
+                    </div>
+
+                    <div class="mt-auto flex flex-col gap-3">
+                        <button id="eraserBtn" class="bg-pink-100 text-pink-700 border-2 border-pink-300 font-bold py-3 rounded-xl hover:bg-pink-200 transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fas fa-eraser"></i> Usar Borrador
+                        </button>
+                        <button id="clearBtn" class="bg-slate-800 text-white font-bold py-3 rounded-xl hover:bg-slate-900 transition-all flex items-center justify-center gap-2 shadow-lg">
+                            <i class="fas fa-trash"></i> Limpiar Todo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lienzo -->
+                <div class="lg:w-3/4">
+                    <canvas id="paintCanvas" width="800" height="450" class="w-full h-[400px] md:h-[450px] border-4 border-slate-300"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 3: GAMIFICACIÓN & CIERRE (Quiz) -->
+        <section class="glass-dark p-8 md:p-10 rounded-3xl mt-12 text-white relative shadow-2xl">
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-400 text-slate-900 font-black px-8 py-3 rounded-full shadow-lg text-xl border-4 border-white">
+                <i class="fas fa-gamepad"></i> RETO FINAL
+            </div>
+
+            <h2 class="text-3xl font-black text-center mb-8 mt-6">¡Demuestra lo que aprendiste!</h2>
+            
+            <div id="quizContainer" class="max-w-3xl mx-auto bg-slate-800/80 p-6 md:p-8 rounded-2xl border border-slate-600 shadow-xl">
+                <!-- Pregunta 1 -->
+                <div class="quiz-step active" id="step1">
+                    <h3 class="text-2xl font-bold mb-6 text-indigo-300">1. ¿Para qué sirve la herramienta del "Baldecito" (Relleno de color)?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            Para borrar las líneas que nos quedaron mal.
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            Para dibujar líneas rectas y cuadrados.
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="true">
+                            Para pintar muy rápido espacios cerrados.
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            Para guardar el archivo en el computador.
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="quiz-step hidden" id="step2">
+                    <h3 class="text-2xl font-bold mb-6 text-indigo-300">2. Si queremos escribir nuestro nombre y grado en el dibujo, ¿Qué herramienta usamos?</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            <i class="fas fa-paint-brush mr-2"></i> Los Pinceles
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="true">
+                            <i class="fas fa-font mr-2"></i> La herramienta de Texto (Letra A)
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            <i class="fas fa-search mr-2"></i> La Lupa
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            <i class="fas fa-circle mr-2"></i> La forma de Círculo
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="quiz-step hidden" id="step3">
+                    <h3 class="text-2xl font-bold mb-6 text-indigo-300">3. ¿Cuál es la regla de ORO antes de terminar nuestra clase y apagar el computador?</h3>
+                    <div class="grid grid-cols-1 gap-4">
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            Pintar toda la pantalla de negro para que descanse.
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="true">
+                            ¡Guardar nuestro archivo correctamente!
+                        </button>
+                        <button class="quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold" data-correct="false">
+                            Dejar el dibujo sin terminar y cerrar todo rápido.
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Resultado Final -->
+                <div class="quiz-step hidden text-center" id="stepResult">
+                    <i class="fas fa-trophy text-6xl text-yellow-400 mb-4 float-anim"></i>
+                    <h3 class="text-4xl font-black mb-2 text-white">¡Excelente Trabajo!</h3>
+                    <p class="text-xl text-slate-300 mb-6">Ya eres un Artista Digital nivel Experto.</p>
+                    
+                    <div class="bg-emerald-500/20 border-2 border-emerald-500 p-6 rounded-2xl inline-block">
+                        <h4 class="font-bold text-emerald-400 mb-2">Asignación para la Clase:</h4>
+                        <p class="text-white text-lg">Abre el programa <b class="text-yellow-300">PAINT</b> en tu computador y sigue las instrucciones del Profe William para dibujar el colegio o tu casa.</p>
+                    </div>
+                    
+                    <br><br>
+                    <button onclick="resetQuiz()" class="bg-slate-700 hover:bg-slate-600 px-6 py-2 rounded-lg font-bold transition-all">Repetir Reto</button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ==========================================
+         SECCIÓN 4: FOOTER
+    =========================================== -->
+    <footer class="bg-slate-900 mt-20 py-8 border-t-4 border-indigo-500 text-center">
+        <p class="text-slate-400 font-bold tracking-wider">
+            © 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática
+        </p>
+        <p class="text-slate-500 text-sm mt-2">Colegio Santa Mariana de Jesús</p>
+    </footer>
+
+    <!-- ==========================================
+         SCRIPTS: Lógica de la Clase Interactiva
+    =========================================== -->
+    <script>
+        // ----------------------------------------------------
+        // 1. FUNCIÓN OBLIGATORIA: Copiar Enlace
+        // ----------------------------------------------------
+        function copiarEnlace() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = document.getElementById('toastCopiado');
+                if(t) {
+                    t.classList.remove('hidden');
+                    // Add animation classes
+                    t.classList.add('translate-y-0', 'opacity-100');
+                    setTimeout(() => {
+                        t.classList.add('hidden');
+                    }, 3000);
+                } else {
+                    alert("Enlace copiado ✅");
+                }
+            }).catch(() => {
+                alert("No se pudo copiar automáticamente. Copia el enlace manualmente desde la barra del navegador.");
+            });
+        }
+
+        // ----------------------------------------------------
+        // 2. LÓGICA DEL MINI-PAINT (Canvas)
+        // ----------------------------------------------------
+        const canvas = document.getElementById('paintCanvas');
+        const ctx = canvas.getContext('2d');
+        const colorPalette = document.getElementById('colorPalette');
+        const brushSize = document.getElementById('brushSize');
+        const brushSizeLabel = document.getElementById('brushSizeLabel');
+        const clearBtn = document.getElementById('clearBtn');
+        const eraserBtn = document.getElementById('eraserBtn');
+
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        let currentColor = '#0f172a'; // Default slate-900
+        let currentBrushSize = 5;
+        let isEraser = false;
+
+        // Resize canvas to fit container properly without stretching
+        function resizeCanvas() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            // Store drawing
+            const tempImg = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            // Restore drawing
+            ctx.putImageData(tempImg, 0, 0);
+            
+            // Set default background white
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        window.addEventListener('resize', resizeCanvas);
+        
+        // Initial setup
+        setTimeout(() => {
+            resizeCanvas();
+        }, 100);
+
+        // Colors for the palette
+        const colors = [
+            '#000000', '#ef4444', '#f97316', '#f59e0b', '#84cc16', 
+            '#22c55e', '#06b6d4', '#3b82f6', '#6366f1', '#a855f7', 
+            '#ec4899', '#78716c'
+        ];
+
+        // Generate color buttons
+        colors.forEach(color => {
+            const btn = document.createElement('button');
+            btn.className = 'w-10 h-10 rounded-full border-2 shadow-sm transition-transform hover:scale-125 focus:outline-none';
+            btn.style.backgroundColor = color;
+            if(color === '#000000') btn.classList.add('border-indigo-500', 'scale-110'); // Selected state
+            else btn.classList.add('border-white');
+
+            btn.addEventListener('click', () => {
+                // Remove selected class from all
+                document.querySelectorAll('#colorPalette button').forEach(b => {
+                    b.classList.remove('border-indigo-500', 'scale-110');
+                    b.classList.add('border-white');
+                });
+                // Add to clicked
+                btn.classList.add('border-indigo-500', 'scale-110');
+                btn.classList.remove('border-white');
+                
+                currentColor = color;
+                isEraser = false;
+                eraserBtn.classList.remove('bg-pink-500', 'text-white');
+                eraserBtn.classList.add('bg-pink-100', 'text-pink-700');
+            });
+            colorPalette.appendChild(btn);
+        });
+
+        // Brush size change
+        brushSize.addEventListener('input', (e) => {
+            currentBrushSize = e.target.value;
+            brushSizeLabel.textContent = `${currentBrushSize}px`;
+        });
+
+        // Eraser button
+        eraserBtn.addEventListener('click', () => {
+            isEraser = true;
+            currentColor = '#ffffff'; // White color for eraser
+            eraserBtn.classList.remove('bg-pink-100', 'text-pink-700');
+            eraserBtn.classList.add('bg-pink-500', 'text-white');
+            
+            // Deselect color palette
+            document.querySelectorAll('#colorPalette button').forEach(b => {
+                b.classList.remove('border-indigo-500', 'scale-110');
+                b.classList.add('border-white');
+            });
+        });
+
+        // Clear Canvas
+        clearBtn.addEventListener('click', () => {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        });
+
+        // Drawing Event Listeners (Mouse & Touch)
+        function startDrawing(e) {
+            isDrawing = true;
+            const pos = getMousePos(canvas, e);
+            [lastX, lastY] = [pos.x, pos.y];
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            e.preventDefault(); // Prevent scrolling on touch
+            const pos = getMousePos(canvas, e);
+            
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = currentBrushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+            
+            [lastX, lastY] = [pos.x, pos.y];
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        // Get accurate mouse/touch position
+        function getMousePos(canvas, evt) {
+            const rect = canvas.getBoundingClientRect();
+            let clientX, clientY;
+
+            if (evt.touches) {
+                clientX = evt.touches[0].clientX;
+                clientY = evt.touches[0].clientY;
+            } else {
+                clientX = evt.clientX;
+                clientY = evt.clientY;
+            }
+
+            return {
+                x: (clientX - rect.left) * (canvas.width / rect.width),
+                y: (clientY - rect.top) * (canvas.height / rect.height)
+            };
+        }
+
+        // Mouse Events
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch Events
+        canvas.addEventListener('touchstart', startDrawing, {passive: false});
+        canvas.addEventListener('touchmove', draw, {passive: false});
+        canvas.addEventListener('touchend', stopDrawing);
+
+
+        // ----------------------------------------------------
+        // 3. LÓGICA DE GAMIFICACIÓN (Quiz)
+        // ----------------------------------------------------
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        document.querySelectorAll('.quiz-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                
+                // Disable all buttons in current step
+                const siblings = this.parentElement.querySelectorAll('.quiz-btn');
+                siblings.forEach(s => {
+                    s.disabled = true;
+                    s.classList.remove('hover:bg-indigo-600');
+                    s.classList.add('opacity-50', 'cursor-not-allowed');
+                });
+
+                // Visual Feedback
+                if(isCorrect) {
+                    this.classList.remove('bg-slate-700', 'opacity-50');
+                    this.classList.add('bg-emerald-500', 'text-white', 'border-emerald-400', 'scale-105', 'shadow-lg');
+                    this.innerHTML += ' <i class="fas fa-check-circle float-right mt-1 text-xl"></i>';
+                } else {
+                    this.classList.remove('bg-slate-700');
+                    this.classList.add('bg-red-500', 'text-white', 'border-red-400', 'opacity-100');
+                    this.innerHTML += ' <i class="fas fa-times-circle float-right mt-1 text-xl"></i>';
+                    
+                    // Highlight the correct one
+                    siblings.forEach(s => {
+                        if(s.getAttribute('data-correct') === 'true') {
+                            s.classList.remove('bg-slate-700', 'opacity-50');
+                            s.classList.add('bg-emerald-500', 'text-white', 'opacity-80', 'border-emerald-400');
+                        }
+                    });
+                }
+
+                // Move to next step after delay
+                setTimeout(() => {
+                    document.getElementById(`step${currentStep}`).classList.add('hidden');
+                    currentStep++;
+                    
+                    if(currentStep <= totalSteps) {
+                        const nextStep = document.getElementById(`step${currentStep}`);
+                        nextStep.classList.remove('hidden');
+                        // Small animation
+                        nextStep.classList.add('animate-pulse');
+                        setTimeout(() => nextStep.classList.remove('animate-pulse'), 500);
+                    } else {
+                        // Show result
+                        const resultStep = document.getElementById('stepResult');
+                        resultStep.classList.remove('hidden');
+                        throwConfetti();
+                    }
+                }, 1500);
+            });
+        });
+
+        function resetQuiz() {
+            currentStep = 1;
+            
+            // Hide all, show step 1
+            document.querySelectorAll('.quiz-step').forEach(el => el.classList.add('hidden'));
+            document.getElementById('step1').classList.remove('hidden');
+
+            // Reset buttons
+            document.querySelectorAll('.quiz-btn').forEach(btn => {
+                btn.disabled = false;
+                btn.className = 'quiz-btn bg-slate-700 hover:bg-indigo-600 text-left p-4 rounded-xl border-2 border-slate-600 transition-all font-semibold';
+                // Remove icons appended dynamically
+                if(btn.querySelector('.fa-check-circle') || btn.querySelector('.fa-times-circle')) {
+                    btn.innerHTML = btn.innerHTML.split('<i class="fas')[0]; 
+                }
+            });
+        }
+
+        // Simple pure JS confetti effect for win screen
+        function throwConfetti() {
+            const colors = ['#fce18a', '#ff726d', '#b48def', '#f4306d', '#00C9FF', '#92FE9D'];
+            for(let i=0; i<50; i++) {
+                const conf = document.createElement('div');
+                conf.style.position = 'fixed';
+                conf.style.width = '10px';
+                conf.style.height = '10px';
+                conf.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                conf.style.top = '-10px';
+                conf.style.left = Math.random() * 100 + 'vw';
+                conf.style.zIndex = '9999';
+                conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                conf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(conf);
+
+                const dur = Math.random() * 3 + 2;
+                conf.animate([
+                    { transform: `translate3d(0,0,0) rotate(0deg)`, opacity: 1 },
+                    { transform: `translate3d(${Math.random()*100 - 50}px, 100vh, 0) rotate(${Math.random()*360}deg)`, opacity: 0 }
+                ], { duration: dur * 1000, easing: 'cubic-bezier(.37,0,.63,1)' });
+
+                setTimeout(() => conf.remove(), dur * 1000);
+            }
+        }
+    </script>
+</body>
+</html>
