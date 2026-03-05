@@ -1,1 +1,395 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase: Plataforma Educativa UNOi - Grado 4</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        /* Glassmorphism Utilities */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        /* 3D Flip Cards CSS */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        .flip-card-inner {
+            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .group:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .floating { animation: float 3s ease-in-out infinite; }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake-error { animation: shake 0.4s ease-in-out; }
+    </style>
+</head>
+<body class="p-4 md:p-8 text-slate-800">
+
+    <div class="max-w-5xl mx-auto flex justify-end gap-3 mb-4">
+        <a href="../../../index.html"
+           class="bg-slate-800/70 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 backdrop-blur">
+           ⬅ Inicio (Grado)
+        </a>
+
+        <a href="../../index.html"
+           class="bg-purple-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300">
+           ⬅ Menú del Periodo
+        </a>
+
+        <button type="button" onclick="copiarEnlace()"
+           class="bg-emerald-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300">
+           🔗 Copiar enlace
+        </button>
+    </div>
+
+    <div id="toastCopiado" class="fixed top-6 right-6 hidden z-50 bg-black/80 text-white px-4 py-3 rounded-xl shadow-lg backdrop-blur">
+        Enlace copiado ✅
+    </div>
+
+    <header class="max-w-5xl mx-auto glass-card rounded-3xl p-8 text-center mb-12 relative overflow-hidden">
+        <div class="absolute -top-10 -left-10 text-9xl opacity-20 floating">🚀</div>
+        <div class="absolute -bottom-10 -right-10 text-9xl opacity-20 floating" style="animation-delay: 1.5s;">💻</div>
+        
+        <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700 drop-shadow-sm mb-4">
+            ¡Descubriendo Santillana UNOi!
+        </h1>
+        <h2 class="text-2xl font-bold text-slate-700">Colegio Santa Mariana de Jesús</h2>
+        <h3 class="text-xl font-semibold text-pink-600 mt-1">Prof. William Fdo Bernal</h3>
+        
+        <div class="mt-8 bg-white/60 rounded-2xl p-5 inline-block shadow-sm border border-white">
+            <p class="text-lg md:text-xl text-blue-900 font-bold flex items-center gap-3">
+                <span class="text-3xl">🎯</span> 
+                Objetivo: Aprender a usar nuestras "llaves mágicas" para entrar a la plataforma y explorar sus tesoros.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto space-y-12">
+
+        <section class="glass-card rounded-3xl p-6 md:p-10 shadow-xl">
+            <h2 class="text-3xl font-black text-center text-blue-800 mb-8">🎮 Simulador de Ingreso Secreto</h2>
+            
+            <div class="flex flex-col md:flex-row gap-8 items-center justify-center">
+                
+                <div id="loginForm" class="bg-white/80 rounded-2xl p-8 shadow-lg w-full max-w-md border-2 border-blue-200 transition-all duration-500">
+                    <div class="text-center mb-6">
+                        <div class="w-20 h-20 bg-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-4xl shadow-inner mb-3">🎓</div>
+                        <h3 class="text-2xl font-bold text-slate-800">Santillana UNOi</h3>
+                        <p class="text-sm text-slate-500">Colegio virtual</p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">👤 Usuario (Tu carnet virtual)</label>
+                            <input type="text" id="simUser" placeholder="Ej: wbernal_estudiante" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none transition-colors text-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-slate-700 mb-1">🔑 Contraseña (Palabra secreta)</label>
+                            <input type="password" id="simPass" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-purple-500 focus:outline-none transition-colors text-lg">
+                        </div>
+                        <button onclick="simularIngreso()" class="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg">
+                            Ingresar a mi clase
+                        </button>
+                    </div>
+                    <p id="loginError" class="text-red-500 text-sm font-bold text-center mt-3 hidden">¡Debes escribir tu usuario y contraseña!</p>
+                </div>
+
+                <div id="canvasContainer" class="w-full max-w-md h-80 bg-slate-900 rounded-2xl shadow-xl border-4 border-slate-800 flex items-center justify-center relative overflow-hidden hidden transition-all duration-500">
+                    <canvas id="successCanvas" width="400" height="300" class="absolute inset-0"></canvas>
+                    <div id="canvasText" class="relative z-10 text-center text-white hidden">
+                        <div class="text-6xl mb-2">🎉</div>
+                        <h3 class="text-3xl font-black text-green-400">¡Acceso Concedido!</h3>
+                        <p class="text-lg mt-2">Bienvenido a la plataforma</p>
+                        <button onclick="resetSimulador()" class="mt-4 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg backdrop-blur transition-colors">Volver a intentar</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="glass-card rounded-3xl p-6 md:p-10 shadow-xl">
+            <h2 class="text-3xl font-black text-center text-purple-800 mb-2">🧭 ¿Qué hay dentro de la plataforma?</h2>
+            <p class="text-center text-slate-600 mb-8 font-semibold text-lg">Pasa el ratón (o toca) sobre los cofres para descubrir sus secretos.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
+                
+                <div class="group h-64 cursor-pointer">
+                    <div class="relative w-full h-full transform-style-3d flip-card-inner rounded-2xl shadow-lg">
+                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-yellow-100 to-yellow-300 rounded-2xl flex flex-col items-center justify-center border-4 border-yellow-400">
+                            <span class="text-6xl mb-4 floating">📚</span>
+                            <h3 class="text-2xl font-black text-yellow-800">Contenidos</h3>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-yellow-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center border-4 border-yellow-400">
+                            <h3 class="text-xl font-black text-yellow-200 mb-2">El Gran Libro</h3>
+                            <p class="text-white text-lg">Aquí están las lecturas, explicaciones del profe y los temas de la clase. ¡Es nuestra biblioteca virtual!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group h-64 cursor-pointer">
+                    <div class="relative w-full h-full transform-style-3d flip-card-inner rounded-2xl shadow-lg">
+                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-emerald-100 to-emerald-300 rounded-2xl flex flex-col items-center justify-center border-4 border-emerald-400">
+                            <span class="text-6xl mb-4 floating" style="animation-delay: 0.5s;">🎬</span>
+                            <h3 class="text-2xl font-black text-emerald-800">Recursos</h3>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-emerald-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center border-4 border-emerald-400">
+                            <h3 class="text-xl font-black text-emerald-200 mb-2">Caja de Herramientas</h3>
+                            <p class="text-white text-lg">Videos, audios, fotos y enlaces divertidos que nos ayudan a entender todo mucho mejor.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group h-64 cursor-pointer">
+                    <div class="relative w-full h-full transform-style-3d flip-card-inner rounded-2xl shadow-lg">
+                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-rose-100 to-rose-300 rounded-2xl flex flex-col items-center justify-center border-4 border-rose-400">
+                            <span class="text-6xl mb-4 floating" style="animation-delay: 1s;">✍️</span>
+                            <h3 class="text-2xl font-black text-rose-800">Actividades</h3>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-rose-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center border-4 border-rose-400">
+                            <h3 class="text-xl font-black text-rose-200 mb-2">¡A Jugar y Practicar!</h3>
+                            <p class="text-white text-lg">Aquí hacemos las tareas, los juegos, los exámenes y demostramos todo lo que hemos aprendido.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="bg-indigo-900 rounded-3xl p-8 shadow-2xl text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+
+            <div class="relative z-10">
+                <h2 class="text-3xl font-black text-center mb-8">🧠 Reto Final del Explorador</h2>
+                
+                <div id="quiz-container" class="max-w-2xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+                    
+                    <div class="quiz-step active" id="step1">
+                        <h3 class="text-2xl font-bold mb-4">1. ¿Qué es la "Contraseña"?</h3>
+                        <div class="space-y-3">
+                            <button onclick="checkAnswer(1, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">A) Es mi nombre completo.</button>
+                            <button onclick="checkAnswer(1, true, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">B) Es mi llave secreta para entrar a la plataforma.</button>
+                            <button onclick="checkAnswer(1, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">C) Es un botón de la plataforma.</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-step hidden" id="step2">
+                        <h3 class="text-2xl font-bold mb-4">2. ¿A quién le puedes prestar tu contraseña?</h3>
+                        <div class="space-y-3">
+                            <button onclick="checkAnswer(2, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">A) A mi mejor amigo del colegio.</button>
+                            <button onclick="checkAnswer(2, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">B) A cualquier persona en internet.</button>
+                            <button onclick="checkAnswer(2, true, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">C) ¡A nadie! Es secreta y personal.</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-step hidden" id="step3">
+                        <h3 class="text-2xl font-bold mb-4">3. Si el profe deja una tarea para resolver, ¿en qué cofre la busco?</h3>
+                        <div class="space-y-3">
+                            <button onclick="checkAnswer(3, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">A) En Contenidos.</button>
+                            <button onclick="checkAnswer(3, true, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">B) En Actividades.</button>
+                            <button onclick="checkAnswer(3, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">C) En Recursos.</button>
+                        </div>
+                    </div>
+
+                    <div class="quiz-step hidden text-center" id="step-result">
+                        <div class="text-6xl mb-4">🏆</div>
+                        <h3 class="text-3xl font-black text-green-400 mb-2">¡Misión Cumplida!</h3>
+                        <p class="text-xl mb-6">Ya eres un experto navegante de la plataforma UNOi.</p>
+                        
+                        <div class="bg-black/30 p-4 rounded-xl border border-dashed border-white/50">
+                            <p class="font-bold text-yellow-300">📝 Tarea para el cuaderno:</p>
+                            <p>Dibuja cómo te imaginas que es tu carnet virtual (con tu Usuario) y un candado gigante representando tu Contraseña.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-5xl mx-auto mt-12 bg-slate-900 text-white text-center py-6 rounded-t-3xl shadow-inner">
+        <p class="font-bold tracking-wide">© 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática</p>
+    </footer>
+
+    <script>
+        // ----------------------------------------------------
+        // FUNCIÓN OBLIGATORIA: Copiar Enlace
+        // ----------------------------------------------------
+        function copiarEnlace() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = document.getElementById('toastCopiado');
+                if (t) {
+                    t.classList.remove('hidden');
+                    setTimeout(() => t.classList.add('hidden'), 2000);
+                } else {
+                    alert("Enlace copiado ✅");
+                }
+            }).catch(() => {
+                alert("No se pudo copiar automáticamente. Copia el enlace manualmente desde la barra del navegador.");
+            });
+        }
+
+        // ----------------------------------------------------
+        // LÓGICA DEL SIMULADOR CONCEPTUAL Y CANVAS
+        // ----------------------------------------------------
+        const canvas = document.getElementById('successCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let animationId;
+
+        class Particle {
+            constructor() {
+                this.x = canvas.width / 2;
+                this.y = canvas.height / 2;
+                this.size = Math.random() * 8 + 2;
+                this.speedX = Math.random() * 6 - 3;
+                this.speedY = Math.random() * 6 - 3;
+                this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.1) this.size -= 0.1;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animateCanvas() {
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.2)'; // Tailwind slate-900 with opacity for trail
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            if(particles.length < 100) {
+                for(let i=0; i<5; i++){
+                    particles.push(new Particle());
+                }
+            }
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.1) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            animationId = requestAnimationFrame(animateCanvas);
+        }
+
+        function simularIngreso() {
+            const user = document.getElementById('simUser').value;
+            const pass = document.getElementById('simPass').value;
+            const errorMsg = document.getElementById('loginError');
+            const form = document.getElementById('loginForm');
+            const canvasContainer = document.getElementById('canvasContainer');
+            const canvasText = document.getElementById('canvasText');
+
+            if(user.trim() === '' || pass.trim() === '') {
+                errorMsg.classList.remove('hidden');
+                form.classList.add('shake-error');
+                setTimeout(() => form.classList.remove('shake-error'), 400);
+                return;
+            }
+
+            errorMsg.classList.add('hidden');
+            form.classList.add('hidden');
+            canvasContainer.classList.remove('hidden');
+            
+            // Iniciar animación Canvas
+            canvas.width = canvasContainer.offsetWidth;
+            canvas.height = canvasContainer.offsetHeight;
+            particles = [];
+            animateCanvas();
+
+            // Mostrar texto de éxito
+            setTimeout(() => {
+                canvasText.classList.remove('hidden');
+            }, 500);
+        }
+
+        function resetSimulador() {
+            cancelAnimationFrame(animationId);
+            document.getElementById('simUser').value = '';
+            document.getElementById('simPass').value = '';
+            document.getElementById('canvasContainer').classList.add('hidden');
+            document.getElementById('canvasText').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        // ----------------------------------------------------
+        // LÓGICA DEL MICRO-QUIZ GAMIFICADO
+        // ----------------------------------------------------
+        function checkAnswer(stepNum, isCorrect, btnElement) {
+            // Deshabilitar botones de este paso
+            const parent = btnElement.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-white/30');
+            });
+
+            if(isCorrect) {
+                btnElement.classList.remove('bg-white/20');
+                btnElement.classList.add('bg-green-500', 'text-white', 'scale-105');
+                
+                setTimeout(() => {
+                    document.getElementById('step' + stepNum).classList.add('hidden');
+                    if(stepNum < 3) {
+                        document.getElementById('step' + (stepNum + 1)).classList.remove('hidden');
+                    } else {
+                        document.getElementById('step-result').classList.remove('hidden');
+                    }
+                }, 1000);
+            } else {
+                btnElement.classList.remove('bg-white/20');
+                btnElement.classList.add('bg-red-500', 'text-white');
+                btnElement.classList.add('shake-error');
+                
+                setTimeout(() => {
+                    btnElement.classList.remove('bg-red-500', 'text-white', 'shake-error');
+                    btnElement.classList.add('bg-white/20');
+                    buttons.forEach(btn => {
+                        btn.disabled = false;
+                        btn.classList.add('hover:bg-white/30');
+                    });
+                }, 1000);
+            }
+        }
+    </script>
+</body>
+</html>
