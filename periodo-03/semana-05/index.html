@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase 9 y 10: Plataforma y Paint - Prof. William Fdo Bernal</title>
+    <title>Clase 9 y 10: Formas y Tarea Física - Prof. William Fdo Bernal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -11,11 +11,12 @@
         body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
         .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
         .card-3d { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .card-3d:hover { transform: translateY(-10px) rotateX(2deg); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
-        canvas { cursor: crosshair; }
+        .card-3d:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+        #canvas-container { position: relative; width: 100%; max-width: 600px; height: 350px; }
+        canvas { border: 2px solid #e2e8f0; background: white; cursor: crosshair; touch-action: none; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-indigo-50 via-white to-purple-50 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 via-white to-emerald-50 min-h-screen">
 
     <nav class="max-w-6xl mx-auto p-4 flex justify-end gap-3 sticky top-0 z-50">
         <a href="../../../index.html" class="bg-slate-800/70 text-white px-5 py-2 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 backdrop-blur text-sm font-semibold">
@@ -29,238 +30,199 @@
         </button>
     </nav>
 
-    <div id="toastCopiado" class="fixed top-20 right-6 hidden bg-black/80 text-white px-6 py-3 rounded-2xl shadow-2xl backdrop-blur z-50 animate-bounce">
+    <div id="toastCopiado" class="fixed top-20 right-6 hidden bg-black/80 text-white px-6 py-3 rounded-2xl shadow-2xl backdrop-blur z-50">
         Enlace copiado ✅
     </div>
 
-    <header class="max-w-6xl mx-auto px-4 pt-10 pb-16 text-center">
-        <div class="inline-block px-4 py-1 mb-4 bg-purple-100 text-purple-700 rounded-full text-sm font-bold tracking-widest uppercase tracking-tighter">
-            Semana 5 | Tecnología 2026
+    <header class="max-w-6xl mx-auto px-4 pt-10 pb-12 text-center">
+        <div class="inline-block px-4 py-1 mb-4 bg-emerald-100 text-emerald-700 rounded-full text-sm font-bold tracking-widest uppercase">
+            Semana 5 | Clase Práctica
         </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 mb-6 leading-tight">
-            ¡Navegando y Creando!
+        <h1 class="text-5xl md:text-6xl font-extrabold text-slate-800 mb-6 leading-tight">
+            Geometría Creativa en <span class="text-blue-600">Paint</span>
         </h1>
-        <p class="text-xl text-slate-600 mb-8 font-medium">Colegio Santa Mariana de Jesús • Prof. William Fdo Bernal</p>
+        <p class="text-xl text-slate-600 mb-8">Prof. William Fdo Bernal • Colegio Santa Mariana de Jesús</p>
         
-        <div class="glass max-w-3xl mx-auto p-8 rounded-[2rem] shadow-2xl border-white/50">
-            <h2 class="text-2xl font-bold text-slate-800 mb-3 flex items-center justify-center gap-2">
-                🎯 Objetivo de Aprendizaje
-            </h2>
-            <p class="text-lg text-slate-700 leading-relaxed">
-                Aprenderemos a subir nuestras tareas a la plataforma paso a paso y practicaremos el uso de herramientas de dibujo para nuestra evaluación práctica en Paint.
+        <div class="glass max-w-3xl mx-auto p-8 rounded-[2rem] shadow-xl border-white/50">
+            <h2 class="text-2xl font-bold text-slate-800 mb-3">🎯 ¿Qué aprenderemos hoy?</h2>
+            <p class="text-lg text-slate-700">
+                A utilizar las herramientas de **formas automáticas** (rectángulos y círculos) para crear dibujos perfectos y prepararnos para nuestro reto en papel.
             </p>
         </div>
     </header>
 
     <main class="max-w-6xl mx-auto px-4 space-y-20 pb-20">
 
-        <section>
-            <h3 class="text-3xl font-bold text-center text-slate-800 mb-10">🚀 ¿Cómo usamos la plataforma?</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div onclick="showTip(1)" class="card-3d glass p-8 rounded-3xl text-center cursor-pointer group">
-                    <div class="w-20 h-20 bg-blue-500 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">👀</div>
-                    <h4 class="text-xl font-bold mb-2">1. Ver Contenidos</h4>
-                    <p class="text-slate-600">Haz clic en los videos y lecturas para aprender.</p>
-                </div>
-                <div onclick="showTip(2)" class="card-3d glass p-8 rounded-3xl text-center cursor-pointer group">
-                    <div class="w-20 h-20 bg-green-500 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">📤</div>
-                    <h4 class="text-xl font-bold mb-2">2. Subir Tareas</h4>
-                    <p class="text-slate-600">Usa el botón "Añadir envío" para mandar tu trabajo.</p>
-                </div>
-                <div onclick="showTip(3)" class="card-3d glass p-8 rounded-3xl text-center cursor-pointer group">
-                    <div class="w-20 h-20 bg-orange-500 rounded-2xl mx-auto mb-6 flex items-center justify-center text-4xl group-hover:scale-110 transition-transform">💬</div>
-                    <h4 class="text-xl font-bold mb-2">3. Interactuar</h4>
-                    <p class="text-slate-600">Participa en juegos y foros con tus compañeros.</p>
-                </div>
+        <section class="flex flex-col items-center">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-slate-800">🛠️ Laboratorio de Formas</h3>
+                <p class="text-slate-600">Haz clic y arrastra sobre el cuadro blanco para crear figuras.</p>
             </div>
-            <div id="tipBox" class="mt-8 p-6 bg-indigo-600 text-white rounded-2xl text-center font-bold hidden animate-pulse">
-                ¡Haz clic en un paso arriba!
-            </div>
-        </section>
 
-        <section class="bg-slate-900 rounded-[3rem] p-10 shadow-2xl overflow-hidden relative">
-            <div class="relative z-10">
-                <h3 class="text-3xl font-bold text-white text-center mb-6">🎨 Simulador de Entrenamiento Paint</h3>
-                <p class="text-slate-400 text-center mb-8">Practica el control del mouse antes de tu evaluación.</p>
-                
-                <div class="flex flex-col items-center gap-6">
-                    <div class="flex gap-4">
-                        <button onclick="setTool('brush')" class="bg-indigo-500 hover:bg-indigo-400 text-white px-6 py-3 rounded-xl font-bold transition-all">🖌️ Pincel</button>
-                        <button onclick="setTool('eraser')" class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-3 rounded-xl font-bold transition-all">🧽 Borrador</button>
-                        <button onclick="clearCanvas()" class="bg-red-500 hover:bg-red-400 text-white px-6 py-3 rounded-xl font-bold transition-all">🗑️ Limpiar</button>
-                    </div>
-                    
-                    <canvas id="paintSim" width="600" height="300" class="bg-white rounded-2xl shadow-inner max-w-full"></canvas>
-                    
-                    <div class="text-slate-400 text-sm italic">Mantén presionado para dibujar puntos de color</div>
+            <div class="bg-white p-6 rounded-[2.5rem] shadow-2xl border-t-4 border-blue-500 w-full max-w-4xl flex flex-col md:flex-row gap-8 items-center">
+                <div class="flex flex-col gap-3 w-full md:w-48">
+                    <button onclick="setShape('rect')" id="btn-rect" class="shape-btn bg-blue-600 text-white p-4 rounded-2xl font-bold shadow-lg hover:scale-105 transition-all">🟦 Rectángulo</button>
+                    <button onclick="setShape('circle')" id="btn-circle" class="shape-btn bg-slate-200 text-slate-700 p-4 rounded-2xl font-bold shadow hover:scale-105 transition-all">⭕ Círculo</button>
+                    <button onclick="setShape('line')" id="btn-line" class="shape-btn bg-slate-200 text-slate-700 p-4 rounded-2xl font-bold shadow hover:scale-105 transition-all">📏 Línea</button>
+                    <hr class="my-2">
+                    <button onclick="clearCanvas()" class="bg-red-100 text-red-600 p-3 rounded-xl font-bold hover:bg-red-200 transition-all">🗑️ Borrar Todo</button>
+                </div>
+
+                <div id="canvas-container">
+                    <canvas id="shapeCanvas" width="600" height="350" class="rounded-xl shadow-inner"></canvas>
+                    <div class="absolute bottom-2 right-4 text-[10px] text-slate-400 uppercase tracking-widest font-bold">Simulador Bernal v2.0</div>
                 </div>
             </div>
         </section>
 
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-            <div class="p-8">
-                <h3 class="text-3xl font-bold text-slate-800 mb-4">📊 Nuestras Herramientas Favoritas</h3>
-                <p class="text-slate-600 mb-6">¿Cuáles son las herramientas que más usaremos en la evaluación práctica? Mira las estadísticas de la clase:</p>
-                <div class="flex gap-3">
-                    <button onclick="updateChart('uso')" class="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg font-bold hover:bg-purple-200 transition-all underline decoration-2">Frecuencia de Uso</button>
-                    <button onclick="updateChart('dificultad')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg font-bold hover:bg-indigo-200 transition-all underline decoration-2">Nivel de Diversión</button>
-                </div>
+            <div class="glass p-8 rounded-3xl shadow-xl order-2 lg:order-1">
+                <canvas id="statsChart"></canvas>
             </div>
-            <div class="glass p-6 rounded-3xl shadow-xl">
-                <canvas id="herramientasChart"></canvas>
+            <div class="order-1 lg:order-2">
+                <h3 class="text-3xl font-bold text-slate-800 mb-4">📈 Precisión de Dibujo</h3>
+                <p class="text-slate-600 mb-6">Al usar formas automáticas, nuestra precisión mejora comparado con el dibujo a mano alzada. ¡Mira la diferencia!</p>
+                <button onclick="toggleData()" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:bg-indigo-700 transition-all">Comparar Métodos</button>
             </div>
         </section>
 
-        <section class="max-w-3xl mx-auto">
-            <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-[2.5rem] p-10 shadow-2xl text-white">
-                <h3 class="text-3xl font-bold text-center mb-8">🎮 Reto de Sabiduría</h3>
-                <div id="quiz">
-                    <div class="quiz-step block">
-                        <p class="text-xl font-semibold mb-6">1. ¿Qué botón presionamos para enviar un archivo?</p>
-                        <div class="grid gap-4">
-                            <button onclick="checkAnswer(this, false)" class="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-all text-left">🔴 Eliminar contenido</button>
-                            <button onclick="checkAnswer(this, true)" class="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-all text-left">🟢 Añadir envío / Subir tarea</button>
-                            <button onclick="checkAnswer(this, false)" class="bg-white/10 hover:bg-white/20 p-4 rounded-2xl transition-all text-left">🔴 Salir de internet</button>
-                        </div>
+        <section class="max-w-4xl mx-auto bg-slate-900 rounded-[3rem] p-12 text-white shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-10">
+                <svg width="200" height="200" fill="currentColor" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            </div>
+            
+            <div class="relative z-10 text-center">
+                <h3 class="text-4xl font-black mb-6">📝 TRABAJO PARA ENTREGAR</h3>
+                <p class="text-xl text-emerald-400 font-bold mb-8 italic">"El Arte de las Figuras"</p>
+                
+                <div class="grid md:grid-cols-2 gap-8 text-left mb-10">
+                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+                        <h4 class="font-bold text-emerald-300 mb-2">📍 Materiales:</h4>
+                        <ul class="list-disc list-inside opacity-90">
+                            <li>1 Hoja blanca (suelta).</li>
+                            <li>Lápiz, regla y borrador.</li>
+                            <li>Colores o marcadores.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/10 p-6 rounded-2xl border border-white/20">
+                        <h4 class="font-bold text-emerald-300 mb-2">🎨 Instrucciones:</h4>
+                        <p class="text-sm leading-relaxed opacity-90">
+                            En tu hoja, dibuja un **Robot** o una **Casa de Campo** usando ÚNICAMENTE:
+                            <br>• 4 Cuadrados/Rectángulos.
+                            <br>• 3 Círculos/Óvalos.
+                            <br>• 2 Triángulos.
+                        </p>
                     </div>
                 </div>
-                <div id="quizResult" class="hidden text-center">
-                    <h4 class="text-4xl font-bold mb-4">🏆 ¡Excelente Trabajo!</h4>
-                    <p class="text-xl opacity-90">Estás listo para la evaluación práctica en la Clase 10.</p>
-                </div>
+                
+                <p class="bg-emerald-600 inline-block px-6 py-3 rounded-full font-bold animate-bounce">
+                    ¡Se entrega al final de la clase al Profesor!
+                </p>
             </div>
         </section>
-
-        <div class="text-center p-12 bg-white rounded-[3rem] shadow-xl border-4 border-dashed border-indigo-100">
-            <h3 class="text-2xl font-bold text-indigo-600 mb-4 italic">📢 El Reto de William:</h3>
-            <p class="text-lg text-slate-700 max-w-2xl mx-auto">
-                "Abre Paint en tu computador y dibuja un **Paisaje de Buga** usando al menos 3 círculos, 2 cuadrados y el balde de pintura. ¡Trata de subirlo a la plataforma como práctica!"
-            </p>
-        </div>
 
     </main>
 
-    <footer class="bg-slate-900 py-12 text-center text-white">
+    <footer class="bg-slate-900 py-10 text-center text-white border-t border-white/10">
         <p class="text-lg font-bold">© 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática</p>
-        <p class="text-sm opacity-50 mt-2">Colegio Santa Mariana de Jesús - Buga</p>
+        <p class="text-sm opacity-50">Colegio Santa Mariana de Jesús - Buga</p>
     </footer>
 
     <script>
-        // --- FUNCIONES OBLIGATORIAS ---
+        // --- NAVEGACIÓN ---
         function copiarEnlace(){
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
+            navigator.clipboard.writeText(window.location.href).then(() => {
                 const t = document.getElementById('toastCopiado');
                 t.classList.remove('hidden');
                 setTimeout(()=> t.classList.add('hidden'), 2000);
-            }).catch(() => {
-                alert("No se pudo copiar automáticamente.");
             });
         }
 
-        // --- EXPLORADOR DE NODOS ---
-        function showTip(paso) {
-            const tipBox = document.getElementById('tipBox');
-            const tips = {
-                1: "💡 ¡RECUERDA! Siempre lee primero las guías antes de empezar a dibujar.",
-                2: "💡 ¡TIP! Asegúrate de que tu archivo de Paint esté guardado como JPG o PNG.",
-                3: "💡 ¡IMPORTANTE! Si tienes dudas, usa el foro para preguntarle al Profe William."
-            };
-            tipBox.innerText = tips[paso];
-            tipBox.classList.remove('hidden');
+        // --- SIMULADOR DE FORMAS ---
+        const canvas = document.getElementById('shapeCanvas');
+        const ctx = canvas.getContext('2d');
+        let startX, startY;
+        let isDrawing = false;
+        let currentShape = 'rect';
+        let snapshot;
+
+        function setShape(shape) {
+            currentShape = shape;
+            document.querySelectorAll('.shape-btn').forEach(b => {
+                b.classList.replace('bg-blue-600', 'bg-slate-200');
+                b.classList.replace('text-white', 'text-slate-700');
+            });
+            const activeBtn = document.getElementById('btn-' + shape);
+            activeBtn.classList.replace('bg-slate-200', 'bg-blue-600');
+            activeBtn.classList.replace('text-slate-700', 'text-white');
         }
 
-        // --- SIMULADOR PAINT (CANVAS) ---
-        const canvas = document.getElementById('paintSim');
-        const ctx = canvas.getContext('2d');
-        let drawing = false;
-        let tool = 'brush';
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        });
 
-        function setTool(t) { tool = t; }
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return;
+            ctx.putImageData(snapshot, 0, 0);
+            
+            const rect = canvas.getBoundingClientRect();
+            const currX = e.clientX - rect.left;
+            const currY = e.clientY - rect.top;
+            
+            ctx.strokeStyle = '#2563eb';
+            ctx.lineWidth = 3;
+
+            if (currentShape === 'rect') {
+                ctx.strokeRect(startX, startY, currX - startX, currY - startY);
+            } else if (currentShape === 'circle') {
+                ctx.beginPath();
+                let radius = Math.sqrt(Math.pow(startX - currX, 2) + Math.pow(startY - currY, 2));
+                ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+                ctx.stroke();
+            } else if (currentShape === 'line') {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(currX, currY);
+                ctx.stroke();
+            }
+        });
+
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
 
-        canvas.addEventListener('mousedown', startDraw);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDraw);
-
-        function startDraw(e) { drawing = true; draw(e); }
-        function stopDraw() { drawing = false; ctx.beginPath(); }
-
-        function draw(e) {
-            if (!drawing) return;
-            const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            ctx.lineWidth = 10;
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = tool === 'brush' ? '#6366f1' : '#ffffff';
-
-            ctx.lineTo(x, y);
-            ctx.stroke();
-            ctx.beginPath();
-            ctx.moveTo(x, y);
-        }
-
         // --- CHART JS ---
-        let herramientasChart;
+        let myChart;
         function initChart() {
-            const ctxChart = document.getElementById('herramientasChart').getContext('2d');
-            herramientasChart = new Chart(ctxChart, {
-                type: 'bar',
+            const ctxChart = document.getElementById('statsChart').getContext('2d');
+            myChart = new Chart(ctxChart, {
+                type: 'line',
                 data: {
-                    labels: ['Pincel', 'Formas', 'Balde de Color', 'Borrador'],
+                    labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4', 'Semana 5'],
                     datasets: [{
-                        label: 'Nivel de Uso',
-                        data: [95, 80, 70, 40],
-                        backgroundColor: ['#6366f1', '#a855f7', '#ec4899', '#f43f5e'],
-                        borderRadius: 10
+                        label: 'Calidad del Dibujo',
+                        data: [40, 55, 50, 65, 90],
+                        borderColor: '#10b981',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        fill: true,
+                        tension: 0.4
                     }]
                 },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true, max: 100 } }
-                }
+                options: { plugins: { legend: { display: false } } }
             });
         }
 
-        function updateChart(tipo) {
-            if(tipo === 'uso') {
-                herramientasChart.data.datasets[0].data = [95, 80, 70, 40];
-                herramientasChart.data.datasets[0].label = 'Nivel de Uso';
-            } else {
-                herramientasChart.data.datasets[0].data = [100, 90, 100, 20];
-                herramientasChart.data.datasets[0].label = 'Nivel de Diversión';
-            }
-            herramientasChart.update();
+        function toggleData() {
+            myChart.data.datasets[0].data = [30, 40, 35, 45, 95];
+            myChart.data.datasets[0].label = 'Precisión con Formas';
+            myChart.update();
         }
 
-        // --- QUIZ ---
-        function checkAnswer(btn, isCorrect) {
-            if(isCorrect) {
-                btn.classList.add('bg-green-500', 'scale-105');
-                setTimeout(() => {
-                    document.getElementById('quiz').classList.add('hidden');
-                    document.getElementById('quizResult').classList.remove('hidden');
-                }, 800);
-            } else {
-                btn.classList.add('bg-red-500', 'animate-shake');
-                setTimeout(() => btn.classList.remove('bg-red-500', 'animate-shake'), 500);
-            }
-        }
-
-        // Iniciar
         window.onload = initChart;
     </script>
-
-    <style>
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        .animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
-    </style>
 </body>
 </html>
