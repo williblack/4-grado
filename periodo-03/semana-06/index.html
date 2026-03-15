@@ -1,1 +1,293 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11 y 12: El Camino de la Luz - Prof. William Bernal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .circuit-bg { background-color: #0f172a; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 20px 20px; }
+        .glow-yellow { box-shadow: 0 0 20px #fbbf24; }
+        .card-hover:hover { transform: translateY(-5px) scale(1.02); transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="circuit-bg text-slate-100 min-h-screen pb-10">
+
+    <div class="max-w-5xl mx-auto flex justify-end gap-3 p-4 sticky top-0 z-50">
+        <a href="../../../index.html" 
+           class="bg-slate-800/80 text-white px-4 py-2 rounded-xl shadow-lg hover:bg-slate-700 hover:scale-105 transition-all duration-300 backdrop-blur border border-white/10">
+            🏠 Inicio (Grado)
+        </a>
+        <a href="../../index.html" 
+           class="bg-purple-600/90 text-white px-4 py-2 rounded-xl shadow-lg hover:bg-purple-500 hover:scale-105 transition-all duration-300 backdrop-blur">
+            📂 Periodo 1
+        </a>
+        <button type="button" onclick="copiarEnlace()" 
+                class="bg-emerald-600/90 text-white px-4 py-2 rounded-xl shadow-lg hover:bg-emerald-500 hover:scale-105 transition-all duration-300">
+            🔗 Copiar enlace
+        </button>
+    </div>
+
+    <div id="toastCopiado" class="fixed top-20 right-6 hidden bg-emerald-500 text-white px-6 py-3 rounded-2xl shadow-2xl z-50 animate-bounce">
+        ¡Enlace copiado para compartir! ✅
+    </div>
+
+    <header class="max-w-5xl mx-auto mt-6 p-6">
+        <div class="glass rounded-3xl p-8 text-center relative overflow-hidden">
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-yellow-400/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl"></div>
+            
+            <span class="bg-yellow-400 text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">🔌 Semana 06 - Tecnología</span>
+            <h1 class="text-4xl md:text-6xl font-extrabold mt-4 mb-2 bg-gradient-to-r from-yellow-300 to-orange-500 bg-clip-text text-transparent">
+                El Camino de la Luz
+            </h1>
+            <p class="text-xl text-slate-300 font-light">Colegio Santa Mariana de Jesús (Buga)</p>
+            <div class="mt-6 inline-block glass px-4 py-2 rounded-2xl">
+                <p class="text-sm">👨‍🏫 <span class="font-semibold">Prof. William Fdo Bernal</span></p>
+            </div>
+            
+            <div class="mt-8 bg-white/5 p-4 rounded-2xl border border-white/10 max-w-2xl mx-auto">
+                <p class="text-sm italic text-yellow-200">
+                    "Aprenderemos cómo viaja la energía para encender bombillos y cómo controlarla con un interruptor, ¡tal como lo hacemos en casa!"
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 space-y-12">
+
+        <section id="apuntes" class="animate-fade-in">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">📝 Copiar al cuaderno</span>
+            </div>
+            <div class="glass rounded-3xl p-8 border-l-8 border-blue-500">
+                <h3 class="text-2xl font-bold mb-4 flex items-center gap-2">
+                    🔄 De Paint a la Electricidad
+                </h3>
+                <p class="mb-4 text-slate-300 leading-relaxed">
+                    La semana pasada usamos <strong>Paint</strong> para crear formas geométricas. Hoy vamos a conectar esas formas: imagina que los cables son líneas y el bombillo es un círculo que brilla.
+                </p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+                        <h4 class="text-yellow-400 font-bold mb-2">⚡ ¿Qué es un Circuito?</h4>
+                        <p class="text-sm">Es un <strong>camino cerrado</strong> por donde corre la energía. ¡Es como una pista de carreras para los electrones!</p>
+                    </div>
+                    <div class="bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+                        <h4 class="text-yellow-400 font-bold mb-2">💡 Componentes Clave:</h4>
+                        <ul class="text-sm space-y-2">
+                            <li>🔋 <strong>Pila:</strong> Da la fuerza (Energía).</li>
+                            <li>🛤️ <strong>Cables:</strong> El camino de metal.</li>
+                            <li>💡 <strong>Bombillo:</strong> El que recibe y brilla.</li>
+                            <li>🔘 <strong>Interruptor:</strong> El que abre o cierra el paso.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulador" class="relative">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-purple-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">💻 Interactuar en el PC</span>
+            </div>
+            <div class="glass rounded-3xl p-8 text-center">
+                <h3 class="text-2xl font-bold mb-6 italic">Simulador Bernal v3.0: Laboratorio Eléctrico</h3>
+                
+                <div class="flex flex-wrap justify-center gap-8 items-center mb-10 p-10 bg-black/40 rounded-3xl border border-white/5 relative">
+                    <div id="pilaVisual" class="w-20 h-32 bg-gradient-to-b from-blue-600 to-blue-900 rounded-lg border-2 border-white/20 flex flex-col justify-between p-2 opacity-30 transition-all duration-500">
+                        <div class="w-8 h-4 bg-gray-300 mx-auto rounded-t-md"></div>
+                        <span class="text-xs font-bold">PILA</span>
+                        <div class="text-xl">🔋</div>
+                    </div>
+
+                    <div id="cable1" class="w-16 h-2 bg-gray-700 opacity-30 transition-all duration-500"></div>
+
+                    <div id="interruptorVisual" onclick="toggleInterruptor()" class="cursor-pointer group">
+                        <div id="swBase" class="w-16 h-10 bg-slate-800 rounded-full p-1 flex items-center transition-all duration-300">
+                            <div id="swCircle" class="w-8 h-8 bg-white rounded-full shadow-lg transform translate-x-0 transition-all duration-300"></div>
+                        </div>
+                        <p class="text-[10px] mt-2 font-bold text-purple-400">INTERRUPTOR</p>
+                    </div>
+
+                    <div id="cable2" class="w-16 h-2 bg-gray-700 opacity-30 transition-all duration-500"></div>
+
+                    <div id="bombilloVisual" class="w-24 h-24 bg-slate-800 rounded-full flex items-center justify-center border-2 border-white/10 transition-all duration-500">
+                        <span id="luzReflejo" class="text-4xl grayscale transition-all duration-500">💡</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="activarParte('pilaVisual')" class="bg-blue-600 hover:bg-blue-500 p-3 rounded-xl font-bold transition-all active:scale-95">Poner Pila</button>
+                    <button onclick="activarParte('cables')" class="bg-slate-600 hover:bg-slate-500 p-3 rounded-xl font-bold transition-all active:scale-95">Conectar Cables</button>
+                    <button onclick="resetSim()" class="bg-red-600 hover:bg-red-500 p-3 rounded-xl font-bold transition-all active:scale-95 col-span-2">Limpiar Mesa</button>
+                </div>
+                <p id="msgSim" class="mt-6 text-yellow-400 font-bold animate-pulse">¡Instala la pila y los cables primero!</p>
+            </div>
+        </section>
+
+        <section id="reto">
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-emerald-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">🖥️ Trabajo en la Sala</span>
+            </div>
+            <div class="glass rounded-3xl p-8 border-l-8 border-emerald-500">
+                <h3 class="text-2xl font-bold mb-6">Reto: La Linterna Mágica</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start gap-4">
+                        <span class="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
+                        <p>Abre el simulador de arriba y logra encender el bombillo (El interruptor debe estar en ON).</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <span class="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span>
+                        <p>En el programa <strong>Paint</strong>, dibuja un circuito que tenga 2 bombillos y 1 sola pila.</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                        <span class="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center font-bold">3</span>
+                        <p>Usa la herramienta "Relleno de color" para pintar los bombillos de amarillo cuando estén "encendidos".</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">🔍 Investigación</span>
+            </div>
+            <div class="glass rounded-3xl p-6 text-center hover:bg-white/5 transition-colors">
+                <p class="text-lg">¿Sabías que hay materiales que no dejan pasar la luz? Busca en Google: <br>
+                <strong class="text-yellow-400 text-2xl font-black">"Materiales aislantes de electricidad para niños"</strong></p>
+            </div>
+        </section>
+
+        <section>
+            <div class="flex items-center gap-2 mb-4">
+                <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">📄 Tarea en Hoja Suelta</span>
+            </div>
+            <div class="glass rounded-3xl p-8 border-dashed border-2 border-red-500/50">
+                <h3 class="text-xl font-bold mb-4">Diseño de "Mi Objeto Eléctrico"</h3>
+                <p class="text-sm text-slate-400 mb-6">En una hoja blanca, dibuja un juguete o aparato de tu casa que use pilas. Debes señalar dónde crees que están los cables y la pila.</p>
+                
+                <div class="bg-white p-4 rounded-lg shadow-inner max-w-xs mx-auto transform rotate-2">
+                    <div class="border-2 border-slate-300 h-40 flex flex-col items-center justify-center text-slate-400 border-dashed">
+                        <p class="text-[10px] font-bold">TU DIBUJO AQUÍ</p>
+                        <p class="text-[8px]">(Ej: Un carrito a control remoto)</p>
+                    </div>
+                    <div class="mt-2 h-4 w-20 bg-slate-200 rounded"></div>
+                    <div class="mt-1 h-3 w-32 bg-slate-100 rounded"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass rounded-3xl p-8 bg-gradient-to-br from-purple-900/40 to-blue-900/40 border-2 border-purple-500/30">
+            <h3 class="text-2xl font-bold mb-6 text-center">⚡ Trivia Relámpago</h3>
+            <div id="quizContainer" class="space-y-6">
+                <div>
+                    <p class="font-semibold mb-3">1. ¿Qué parte del circuito empuja la energía?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <button onclick="check(this, false)" class="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-all">El Bombillo</button>
+                        <button onclick="check(this, true)" class="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-all">La Pila</button>
+                        <button onclick="check(this, false)" class="bg-white/10 p-3 rounded-xl hover:bg-white/20 transition-all">El Cable</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 py-10 border-t border-white/10 text-center">
+        <p class="text-slate-500 text-sm">
+            © 2026 | <span class="text-slate-300 font-bold">Prof. William Fdo Bernal</span> - Área de Tecnología e Informática
+        </p>
+    </footer>
+
+    <script>
+        // --- COPIAR ENLACE ---
+        function copiarEnlace(){
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = document.getElementById('toastCopiado');
+                t.classList.remove('hidden');
+                setTimeout(()=> t.classList.add('hidden'), 2000);
+            }).catch(() => {
+                alert("Enlace copiado ✅");
+            });
+        }
+
+        // --- SIMULADOR ---
+        let hasPila = false;
+        let hasCables = false;
+        let isSwOn = false;
+
+        function activarParte(id) {
+            if(id === 'pilaVisual') {
+                hasPila = true;
+                document.getElementById('pilaVisual').style.opacity = "1";
+            }
+            if(id === 'cables') {
+                hasCables = true;
+                document.getElementById('cable1').style.opacity = "1";
+                document.getElementById('cable1').classList.add('bg-blue-400');
+                document.getElementById('cable2').style.opacity = "1";
+                document.getElementById('cable2').classList.add('bg-blue-400');
+            }
+            updateCircuit();
+        }
+
+        function toggleInterruptor() {
+            if(!hasCables) {
+                alert("¡Primero conecta los cables!");
+                return;
+            }
+            isSwOn = !isSwOn;
+            const circle = document.getElementById('swCircle');
+            const base = document.getElementById('swBase');
+            
+            if(isSwOn) {
+                circle.style.transform = "translateX(32px)";
+                base.classList.replace('bg-slate-800', 'bg-emerald-500');
+            } else {
+                circle.style.transform = "translateX(0)";
+                base.classList.replace('bg-emerald-500', 'bg-slate-800');
+            }
+            updateCircuit();
+        }
+
+        function updateCircuit() {
+            const bombillo = document.getElementById('bombilloVisual');
+            const luz = document.getElementById('luzReflejo');
+            const msg = document.getElementById('msgSim');
+
+            if(hasPila && hasCables && isSwOn) {
+                bombillo.classList.add('bg-yellow-400', 'glow-yellow');
+                luz.classList.remove('grayscale');
+                msg.innerText = "¡CIRCUITO FUNCIONANDO! 💡✨";
+                msg.classList.replace('text-yellow-400', 'text-emerald-400');
+            } else {
+                bombillo.classList.remove('bg-yellow-400', 'glow-yellow');
+                luz.classList.add('grayscale');
+                if(!hasPila) msg.innerText = "Falta la pila... 🔋";
+                else if(!hasCables) msg.innerText = "Faltan los cables... 🛤️";
+                else if(!isSwOn) msg.innerText = "El interruptor está apagado. 🔘";
+            }
+        }
+
+        function resetSim() {
+            hasPila = false; hasCables = false; isSwOn = false;
+            location.reload();
+        }
+
+        // --- QUIZ ---
+        function check(btn, isCorrect) {
+            if(isCorrect) {
+                btn.classList.add('bg-emerald-500', 'scale-105', 'text-white');
+                alert("¡Excelente! La pila es el generador de fuerza. 🔋");
+            } else {
+                btn.classList.add('bg-red-500', 'animate-pulse');
+                setTimeout(() => btn.classList.remove('bg-red-500', 'animate-pulse'), 500);
+            }
+        }
+    </script>
+</body>
+</html>
