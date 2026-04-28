@@ -1,1 +1,387 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase Interactiva | Medios y TIC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+        body { font-family: 'Nunito', sans-serif; }
+        
+        /* Efectos Glassmorphism y 3D */
+        .glass {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Flip Cards para el Módulo Interactivo */
+        .perspective { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .flip-card-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        
+        /* Animaciones para Quiz */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+        .shake { animation: shake 0.4s ease-in-out; }
+        
+        /* Ocultar barra de scroll para un diseño más limpio */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+<body class="bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-[#f0f4f8] text-slate-800 min-h-screen">
+
+    <div class="max-w-5xl mx-auto flex justify-end gap-3 mb-4 pt-6 px-4">
+        <a href="../../../index.html"
+           class="bg-slate-800/80 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 hover:bg-slate-900 transition-all duration-300 backdrop-blur z-10 flex items-center gap-2">
+           <span>⬅</span> Inicio (Grado)
+        </a>
+      
+        <a href="../../index.html"
+           class="bg-purple-600/90 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 hover:bg-purple-700 transition-all duration-300 backdrop-blur z-10 flex items-center gap-2">
+           <span>⬅</span> Menú del Periodo
+        </a>
+      
+        <button type="button" onclick="copiarEnlace()"
+           class="bg-emerald-600/90 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 hover:bg-emerald-700 transition-all duration-300 backdrop-blur z-10 flex items-center gap-2">
+           <span>🔗</span> Copiar enlace
+        </button>
+    </div>
+      
+    <div id="toastCopiado" class="fixed top-6 right-6 hidden z-50 bg-black/80 text-white px-6 py-3 rounded-xl shadow-2xl backdrop-blur font-bold border border-emerald-400">
+        ¡Enlace copiado! ✅
+    </div>
+
+    <header class="max-w-5xl mx-auto px-4 mb-10">
+        <div class="glass rounded-3xl p-8 shadow-xl text-center relative overflow-hidden border-t-4 border-t-purple-500">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-400/10 to-purple-500/10 z-0"></div>
+            <div class="relative z-10">
+                <p class="text-sm font-bold text-purple-600 tracking-wider uppercase mb-2">Colegio Santa Mariana de Jesús | Buga</p>
+                <h1 class="text-4xl md:text-5xl font-black text-slate-800 mb-4 tracking-tight">
+                    📺 Los medios de comunicación y las TIC 📱
+                </h1>
+                <p class="text-xl font-bold text-slate-600 mb-6">Grado 4° | Tecnología e Informática</p>
+                
+                <div class="inline-block bg-white/80 rounded-2xl p-4 shadow-md border border-slate-200 hover:scale-105 transition-transform duration-300">
+                    <p class="text-emerald-700 font-black text-lg flex items-center justify-center gap-2">
+                        <span>🎯</span> Objetivo de Aprendizaje:
+                    </p>
+                    <p class="text-slate-700 font-bold mt-1">Conocer y diferenciar cómo nos conectamos hoy en día.</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 space-y-8 pb-12">
+
+        <section class="glass rounded-3xl p-6 shadow-lg border-l-8 border-l-blue-500 hover:shadow-xl transition-shadow duration-300">
+            <div class="mb-4">
+                <span class="bg-blue-500 text-white text-xs font-black px-4 py-2 rounded-full shadow-md">📝 COPIAR AL CUADERNO</span>
+            </div>
+            <h2 class="text-2xl font-black mb-3 text-blue-800">¡De la semana 1 al mundo moderno! 🌍</h2>
+            <div class="bg-white/60 p-4 rounded-xl text-lg font-bold text-slate-700 space-y-3">
+                <p>👉 En la semana 1 aprendimos que estamos <strong>"¡Conectados con el Mundo!"</strong>. Ahora vamos a ver qué herramientas usamos para esa conexión.</p>
+                <ul class="list-disc list-inside ml-2 space-y-2 text-slate-600">
+                    <li><strong>Medios de Comunicación:</strong> Son formas de enviar mensajes a muchas personas. Como la TV 📺, la radio 📻 o los periódicos 📰. ¡Casi siempre solo los vemos o escuchamos!</li>
+                    <li><strong>Las TIC (Tecnologías de la Información):</strong> Son las herramientas modernas digitales, como el celular 📱, el internet 🌐 o la tablet. ¡Nos permiten responder al instante e interactuar! Son como superpoderes de comunicación. ⚡</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="glass rounded-3xl p-6 shadow-lg border-l-8 border-l-pink-500">
+            <div class="mb-6">
+                <span class="bg-pink-500 text-white text-xs font-black px-4 py-2 rounded-full shadow-md">💻 INTERACTUAR EN EL PC</span>
+            </div>
+            <h2 class="text-2xl font-black mb-6 text-pink-800 text-center">¡Dale la vuelta a las tarjetas! (Medios vs TIC) 🔄</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="flip-card perspective w-full h-64 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transform-style-3d shadow-xl rounded-2xl">
+                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-amber-200 to-orange-300 rounded-2xl flex flex-col items-center justify-center border-4 border-white">
+                            <span class="text-6xl mb-2">📺</span>
+                            <h3 class="font-black text-2xl text-amber-900">La Televisión</h3>
+                            <p class="font-bold text-amber-800 mt-2 bg-white/50 px-3 py-1 rounded-full text-sm">Medio Tradicional</p>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-indigo-400 to-purple-500 rounded-2xl flex flex-col items-center justify-center border-4 border-white text-center p-4">
+                            <span class="text-5xl mb-2">💻</span>
+                            <h3 class="font-black text-xl text-white">YouTube / Streaming</h3>
+                            <p class="font-bold text-white/90 mt-2 text-sm">Es una TIC. ¡Tú eliges qué ver y puedes comentar los videos en cualquier momento!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card perspective w-full h-64 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transform-style-3d shadow-xl rounded-2xl">
+                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-green-200 to-emerald-300 rounded-2xl flex flex-col items-center justify-center border-4 border-white">
+                            <span class="text-6xl mb-2">✉️</span>
+                            <h3 class="font-black text-2xl text-emerald-900">Carta de Papel</h3>
+                            <p class="font-bold text-emerald-800 mt-2 bg-white/50 px-3 py-1 rounded-full text-sm">Medio Tradicional</p>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-2xl flex flex-col items-center justify-center border-4 border-white text-center p-4">
+                            <span class="text-5xl mb-2">💬</span>
+                            <h3 class="font-black text-xl text-white">WhatsApp / Email</h3>
+                            <p class="font-bold text-white/90 mt-2 text-sm">Es una TIC. ¡El mensaje llega al otro lado del mundo en solo 1 segundo y con emojis! 🚀</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card perspective w-full h-64 cursor-pointer">
+                    <div class="flip-card-inner relative w-full h-full transform-style-3d shadow-xl rounded-2xl">
+                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-red-200 to-rose-300 rounded-2xl flex flex-col items-center justify-center border-4 border-white">
+                            <span class="text-6xl mb-2">📻</span>
+                            <h3 class="font-black text-2xl text-rose-900">La Radio</h3>
+                            <p class="font-bold text-rose-800 mt-2 bg-white/50 px-3 py-1 rounded-full text-sm">Medio Tradicional</p>
+                        </div>
+                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-gradient-to-br from-teal-400 to-emerald-500 rounded-2xl flex flex-col items-center justify-center border-4 border-white text-center p-4">
+                            <span class="text-5xl mb-2">🎧</span>
+                            <h3 class="font-black text-xl text-white">Podcast en Spotify</h3>
+                            <p class="font-bold text-white/90 mt-2 text-sm">Es una TIC. Descargas el audio en tu celular y lo pausas cuando quieres.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass rounded-3xl p-6 shadow-lg border-l-8 border-l-emerald-500">
+            <div class="mb-4">
+                <span class="bg-emerald-500 text-white text-xs font-black px-4 py-2 rounded-full shadow-md">🖥️ TRABAJO EN LA SALA</span>
+            </div>
+            
+            <div class="bg-emerald-50 rounded-2xl p-6 border-2 border-emerald-200">
+                <h2 class="text-2xl font-black mb-2 text-emerald-800">📱 Actividad: "Mis Medios de Comunicación con IA"</h2>
+                <div class="flex gap-4 text-sm font-bold text-emerald-700 mb-6 bg-white p-3 rounded-xl inline-block shadow-sm">
+                    <span>⏱️ Duración: 35 min</span> | 
+                    <span>🛠️ Herramientas: Chat IA + Cuaderno + Lápices de colores</span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-slate-100">
+                        <h3 class="font-black text-lg text-slate-800">1️⃣ Dibuja tu medio favorito (10 min) 🎨</h3>
+                        <p class="text-slate-600 font-bold mt-2 text-sm">• En tu cuaderno, dibuja el medio que más te guste: 📱 celular, 📺 TV, 📻 radio, ✉️ carta, 💬 WhatsApp.<br>• Escribe debajo: <span class="italic bg-amber-100 px-1">"Lo uso en mi casa para: ____________________"</span></p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-slate-100">
+                        <h3 class="font-black text-lg text-slate-800">2️⃣ Pregunta a la IA (5 min) 🤖</h3>
+                        <p class="text-slate-600 font-bold mt-2 text-sm text-center">Copia este texto y pégalo en el Chat de IA:</p>
+                        <div class="bg-slate-800 text-green-400 p-2 rounded-lg text-xs font-mono mt-2 cursor-pointer hover:bg-slate-700" onclick="navigator.clipboard.writeText('Soy niño de 4°. Explícame con ejemplos fáciles: ¿qué es un medio de comunicación y qué es una herramienta TIC? Dame 3 ejemplos de cada uno.'); alert('Prompt copiado al portapapeles');">
+                            "Soy niño de 4°. Explícame con ejemplos fáciles: ¿qué es un medio de comunicación y qué es una herramienta TIC? Dame 3 ejemplos de cada uno." (Clic para copiar)
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-slate-100">
+                        <h3 class="font-black text-lg text-slate-800">3️⃣ Piensa y responde (10 min) 💭</h3>
+                        <p class="text-slate-600 font-bold mt-2 text-sm">Responde en tu cuaderno:<br>• "Si ganara un premio en el colegio, le avisaría a mi abuelito usando ___ porque ___." 👵<br>• "Para avisarle a mi amigo, usaría ___ porque ___." 🧒</p>
+                    </div>
+
+                    <div class="bg-white p-4 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 border border-slate-100">
+                        <h3 class="font-black text-lg text-slate-800">4️⃣ Compara y Reflexiona ✨</h3>
+                        <p class="text-slate-600 font-bold mt-2 text-sm">• ¿Coincide la IA con lo que pensaste? Marca con ✅ o con ❓ lo que le preguntarás al profe.<br>• Escribe en grande: <span class="italic bg-amber-100 px-1">"Hoy aprendí que para comunicarnos podemos usar ___ y ___. Mi favorito es ___ porque ___."</span> 🌈</p>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-r-xl">
+                    <p class="font-black text-yellow-800 text-lg">✨ Reto divertido final 🚀</p>
+                    <p class="font-bold text-yellow-900 text-sm">Pídele a la IA: <em>"Inventa un medio de comunicación del futuro para niños"</em> y dibújalo en el reverso de tu hoja.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <section class="glass rounded-3xl p-6 shadow-lg border-t-8 border-t-purple-500 hover:scale-[1.02] transition-transform duration-300">
+                <div class="mb-4 text-center">
+                    <span class="bg-purple-500 text-white text-xs font-black px-4 py-2 rounded-full shadow-md">🔍 INVESTIGACIÓN EN GOOGLE</span>
+                </div>
+                <h3 class="text-xl font-black text-center text-purple-900 mb-3">Tu misión secreta de búsqueda 🕵️‍♂️</h3>
+                <p class="text-center font-bold text-slate-700 bg-white/70 p-4 rounded-xl border border-purple-200">
+                    Abre Google y busca: <br><span class="text-purple-700 text-lg">"¿Cuál fue el primer medio de comunicación inventado por el ser humano?"</span><br>
+                    ¡Te sorprenderás de que no usaba cables ni baterías!
+                </p>
+            </section>
+
+            <section class="glass rounded-3xl p-6 shadow-lg border-t-8 border-t-orange-500 hover:scale-[1.02] transition-transform duration-300">
+                <div class="mb-4 text-center">
+                    <span class="bg-orange-500 text-white text-xs font-black px-4 py-2 rounded-full shadow-md">📄 TAREA EN HOJA SUELTA</span>
+                </div>
+                <h3 class="text-xl font-black text-center text-orange-900 mb-3">Para entregar al profe 📥</h3>
+                <div class="bg-white/70 p-4 rounded-xl border border-orange-200 font-bold text-slate-700">
+                    <p class="mb-2">Escribe lo que descubriste en Google en una hoja en blanco.</p>
+                    <p class="text-sm bg-orange-100 p-2 rounded-lg text-orange-800">
+                        📁 <strong>Nombra tu hoja así en la esquina:</strong><br>
+                        <code>4_comunicacion_fecha_TuNombre</code><br>
+                        ✅ Ejemplo: <code>4_comunicacion_261124_LuisaMarin</code>
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <section class="glass rounded-3xl p-8 shadow-xl border-4 border-indigo-200 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 text-9xl opacity-10">🎮</div>
+            <h2 class="text-3xl font-black mb-6 text-indigo-900 text-center relative z-10">¡Demuestra tu poder TIC! 🏆</h2>
+            
+            <div id="quiz-container" class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-md relative z-10">
+                <h3 id="question-text" class="text-xl font-bold text-slate-800 mb-4 text-center">Cargando reto...</h3>
+                <div id="options-container" class="space-y-3">
+                    </div>
+                <div id="feedback" class="mt-4 text-center font-black text-xl hidden rounded-xl py-2"></div>
+                <button id="next-btn" class="mt-4 w-full bg-indigo-600 text-white font-bold py-3 rounded-xl hidden hover:bg-indigo-700 transition-colors">Siguiente Pregunta ➡️</button>
+            </div>
+            <div id="result-container" class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-md hidden text-center relative z-10">
+                <h3 class="text-4xl mb-4">🎉</h3>
+                <h3 class="text-2xl font-black text-indigo-900 mb-2">¡Nivel Completado!</h3>
+                <p id="score-text" class="text-xl font-bold text-slate-700"></p>
+                <button onclick="iniciarQuiz()" class="mt-6 bg-indigo-600 text-white font-bold py-2 px-6 rounded-xl hover:bg-indigo-700 transition-transform hover:scale-105">Jugar de nuevo 🔄</button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center text-sm font-bold border-t-4 border-t-purple-600 mt-10">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col items-center gap-2">
+            <span class="text-2xl">👨‍💻</span>
+            <p>© 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática</p>
+            <p class="text-xs font-normal opacity-50">Colegio Santa Mariana de Jesús</p>
+        </div>
+    </footer>
+
+    <script>
+        // 1. Botón Copiar Enlace Obligatorio
+        function copiarEnlace() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = document.getElementById('toastCopiado');
+                if(t) {
+                    t.classList.remove('hidden');
+                    setTimeout(() => t.classList.add('hidden'), 2500);
+                } else {
+                    alert("Enlace copiado ✅");
+                }
+            }).catch(() => {
+                alert("No se pudo copiar automáticamente. Copia el enlace manualmente desde la barra del navegador.");
+            });
+        }
+
+        // 2. Lógica del Micro-Quiz (Framework Bernal Interactivo)
+        const preguntas = [
+            {
+                pregunta: "Si estás viendo tu programa favorito en la sala con tu familia, estás usando...",
+                opciones: ["Una herramienta TIC de internet", "Un medio de comunicación tradicional", "Un mensaje de WhatsApp"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Cuál de estos ejemplos es una TIC (Tecnología de la Información y Comunicación)?",
+                opciones: ["El periódico impreso de Buga", "Una carta enviada por correo", "Una videollamada por celular"],
+                correcta: 2
+            },
+            {
+                pregunta: "¿Por qué decimos que las TIC son rápidas?",
+                opciones: ["Porque los celulares tienen ruedas", "Porque mandan mensajes al instante a cualquier lugar", "Porque las noticias salen en la tele por la noche"],
+                correcta: 1
+            }
+        ];
+
+        let preguntaActual = 0;
+        let puntaje = 0;
+
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedback = document.getElementById('feedback');
+        const nextBtn = document.getElementById('next-btn');
+        const quizContainer = document.getElementById('quiz-container');
+        const resultContainer = document.getElementById('result-container');
+        const scoreText = document.getElementById('score-text');
+
+        function iniciarQuiz() {
+            preguntaActual = 0;
+            puntaje = 0;
+            quizContainer.classList.remove('hidden');
+            resultContainer.classList.add('hidden');
+            mostrarPregunta();
+        }
+
+        function mostrarPregunta() {
+            feedback.classList.add('hidden');
+            nextBtn.classList.add('hidden');
+            const p = preguntas[preguntaActual];
+            questionText.textContent = `Pregunta ${preguntaActual + 1}: ${p.pregunta}`;
+            
+            optionsContainer.innerHTML = '';
+            p.opciones.forEach((opcion, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left bg-slate-100 hover:bg-indigo-100 text-slate-700 font-bold py-3 px-4 rounded-xl border-2 border-slate-200 transition-colors focus:outline-none';
+                btn.textContent = opcion;
+                btn.onclick = () => verificarRespuesta(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function verificarRespuesta(indexSeleccionado, boton) {
+            // Deshabilitar botones
+            const botones = optionsContainer.querySelectorAll('button');
+            botones.forEach(b => b.disabled = true);
+
+            const correctaIndex = preguntas[preguntaActual].correcta;
+            
+            feedback.classList.remove('hidden');
+            
+            if (indexSeleccionado === correctaIndex) {
+                boton.classList.replace('bg-slate-100', 'bg-green-500');
+                boton.classList.replace('hover:bg-indigo-100', 'bg-green-500');
+                boton.classList.replace('text-slate-700', 'text-white');
+                boton.classList.add('border-green-600');
+                feedback.textContent = "¡Excelente! Respuesta correcta. 🌟";
+                feedback.className = "mt-4 text-center font-black text-xl bg-green-100 text-green-700 rounded-xl py-2";
+                puntaje++;
+            } else {
+                boton.classList.replace('bg-slate-100', 'bg-red-500');
+                boton.classList.replace('hover:bg-indigo-100', 'bg-red-500');
+                boton.classList.replace('text-slate-700', 'text-white');
+                boton.classList.add('border-red-600', 'shake');
+                
+                // Resaltar la correcta
+                botones[correctaIndex].classList.replace('bg-slate-100', 'bg-green-200');
+                botones[correctaIndex].classList.add('border-green-400');
+                
+                feedback.textContent = "¡Casi! Sigue practicando. 💡";
+                feedback.className = "mt-4 text-center font-black text-xl bg-red-100 text-red-700 rounded-xl py-2";
+            }
+
+            nextBtn.classList.remove('hidden');
+        }
+
+        nextBtn.onclick = () => {
+            preguntaActual++;
+            if (preguntaActual < preguntas.length) {
+                mostrarPregunta();
+            } else {
+                mostrarResultados();
+            }
+        };
+
+        function mostrarResultados() {
+            quizContainer.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            scoreText.textContent = `Lograste ${puntaje} de ${preguntas.length} puntos.`;
+            if(puntaje === preguntas.length) {
+                scoreText.innerHTML += "<br><span class='text-green-600 font-black mt-2 inline-block'>¡Eres un Experto en Tecnología! 🏆</span>";
+            } else {
+                scoreText.innerHTML += "<br><span class='text-amber-600 font-black mt-2 inline-block'>¡Buen intento! Sigue aprendiendo con el Profe William. 👍</span>";
+            }
+        }
+
+        // Iniciar al cargar
+        window.onload = iniciarQuiz;
+    </script>
+</body>
+</html>
