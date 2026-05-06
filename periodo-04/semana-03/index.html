@@ -1,1 +1,422 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Evolución de la Comunicación - 4° Grado</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #e0f2fe;
+            background-image: radial-gradient(#bae6fd 2px, transparent 2px), radial-gradient(#bae6fd 2px, transparent 2px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+        }
+        /* Glassmorphism Classes */
+        .glass {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Flip Card Styles (MOD-C) */
+        .flip-card {
+            background-color: transparent;
+            height: 250px;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .flip-card-front {
+            background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
+            border: 4px dashed #ca8a04;
+        }
+        .flip-card-back {
+            background: linear-gradient(135deg, #86efac 0%, #4ade80 100%);
+            border: 4px solid #16a34a;
+            transform: rotateY(180deg);
+        }
+        /* Animations */
+        .vibrate {
+            animation: vibrate 0.3s linear infinite both;
+        }
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        .pop {
+            animation: pop 0.4s ease-out forwards;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 p-4 md:p-8">
+
+    <!-- BOTONES OBLIGATORIOS -->
+    <div class="max-w-5xl mx-auto flex justify-end gap-3 mb-4">
+        <a href="../../../index.html"
+           class="bg-slate-800/70 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 backdrop-blur">
+           ⬅ Inicio (Grado)
+        </a>
+
+        <a href="../../index.html"
+           class="bg-purple-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300">
+           ⬅ Menú del Periodo
+        </a>
+
+        <button type="button" onclick="copiarEnlace()"
+           class="bg-emerald-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300">
+           🔗 Copiar enlace
+        </button>
+    </div>
+
+    <div id="toastCopiado" class="fixed top-6 right-6 hidden bg-black/80 text-white px-4 py-3 rounded-xl shadow-lg backdrop-blur z-50 transition-all duration-300">
+        Enlace copiado ✅
+    </div>
+
+    <!-- SECCIÓN 1: HERO -->
+    <header class="max-w-5xl mx-auto glass rounded-3xl p-8 mb-8 shadow-xl text-center transform hover:-translate-y-1 transition-all duration-500">
+        <h3 class="text-indigo-600 font-bold text-xl mb-2 tracking-wide">Colegio Santa Mariana de Jesús</h3>
+        <h1 class="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 mb-4 drop-shadow-sm">
+            La Evolución de la Comunicación 📱📜
+        </h1>
+        <p class="text-lg text-slate-600 mb-6 font-semibold">Prof. William Fdo Bernal | Grado 4°</p>
+        
+        <div class="inline-block bg-white/80 border-2 border-indigo-200 rounded-2xl p-4 shadow-inner">
+            <span class="block text-indigo-500 text-sm font-bold uppercase mb-1">🎯 Objetivo de Aprendizaje</span>
+            <p class="text-lg text-slate-700">Entender cómo hablábamos antes y cómo las máquinas nos ayudan a ser súper rápidos hoy.</p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto space-y-8">
+
+        <!-- [📝 COPIAR AL CUADERNO] -->
+        <section class="glass rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-8 border-t-blue-500">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">📝 COPIAR AL CUADERNO</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-4 text-blue-800">De las cartas a los emojis 🚀</h2>
+            
+            <div class="bg-blue-50 rounded-2xl p-5 border border-blue-100">
+                <p class="text-lg mb-4">
+                    <strong>¡Recordemos!</strong> La semana #2 vimos "Los medios de comunicación y las TIC". Hoy veremos cómo estos medios han cambiado mágicamente con el tiempo.
+                </p>
+                <p class="text-lg mb-4">
+                    Hace mucho tiempo, los mensajes viajaban en caballos o barcos y tardaban semanas. Hoy, gracias a las <strong>TIC</strong> (la tecnología), los mensajes vuelan por el aire y llegan ¡en un segundo!
+                </p>
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+                    <h4 class="font-bold text-slate-700 mb-2 border-b pb-2">Diferencia Mágica:</h4>
+                    <ul class="list-disc pl-6 space-y-2 text-lg">
+                        <li><strong>Medios Antiguos:</strong> Lentos, de papel, o señales físicas.</li>
+                        <li><strong>Medios Modernos:</strong> Súper rápidos, digitales, en pantallas.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- [💻 INTERACTUAR EN EL PC] -->
+        <section class="glass rounded-3xl p-6 md:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border-t-8 border-t-purple-500">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">💻 INTERACTUAR EN EL PC</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-2 text-purple-800 text-center">¡Gira las cartas mágicas! 🃏</h2>
+            <p class="text-center text-slate-600 mb-8 text-lg">Pasa tu ratón por encima de las cartas para viajar en el tiempo desde el PASADO hasta el PRESENTE.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Carta 1 -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front text-slate-800">
+                            <span class="text-5xl mb-3">📜</span>
+                            <h3 class="text-xl font-bold">Carta de Papel</h3>
+                            <p class="text-sm mt-2 font-medium">Tardaba semanas en llegar en barco o caballo.</p>
+                            <span class="mt-4 px-3 py-1 bg-yellow-100 rounded-full text-xs font-bold border border-yellow-400">PASADO</span>
+                        </div>
+                        <div class="flip-card-back text-white">
+                            <span class="text-5xl mb-3">📧</span>
+                            <h3 class="text-xl font-bold">Correo Electrónico (Email)</h3>
+                            <p class="text-sm mt-2 font-medium">Llega en 1 segundo a cualquier parte del mundo.</p>
+                            <span class="mt-4 px-3 py-1 bg-green-200 text-green-900 rounded-full text-xs font-bold border border-green-500">PRESENTE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carta 2 -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front text-slate-800">
+                            <span class="text-5xl mb-3">☎️</span>
+                            <h3 class="text-xl font-bold">Teléfono de Cable</h3>
+                            <p class="text-sm mt-2 font-medium">Estaba pegado a la pared de la casa.</p>
+                            <span class="mt-4 px-3 py-1 bg-yellow-100 rounded-full text-xs font-bold border border-yellow-400">PASADO</span>
+                        </div>
+                        <div class="flip-card-back text-white">
+                            <span class="text-5xl mb-3">📱</span>
+                            <h3 class="text-xl font-bold">Celular / Smartphone</h3>
+                            <p class="text-sm mt-2 font-medium">Lo llevas en tu bolsillo y tiene internet.</p>
+                            <span class="mt-4 px-3 py-1 bg-green-200 text-green-900 rounded-full text-xs font-bold border border-green-500">PRESENTE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Carta 3 -->
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front text-slate-800">
+                            <span class="text-5xl mb-3">🕊️</span>
+                            <h3 class="text-xl font-bold">Paloma Mensajera</h3>
+                            <p class="text-sm mt-2 font-medium">Un pajarito volaba con un papelito atado.</p>
+                            <span class="mt-4 px-3 py-1 bg-yellow-100 rounded-full text-xs font-bold border border-yellow-400">PASADO</span>
+                        </div>
+                        <div class="flip-card-back text-white">
+                            <span class="text-5xl mb-3">💬</span>
+                            <h3 class="text-xl font-bold">WhatsApp</h3>
+                            <p class="text-sm mt-2 font-medium">Envías textos, audios y caritas sonrientes.</p>
+                            <span class="mt-4 px-3 py-1 bg-green-200 text-green-900 rounded-full text-xs font-bold border border-green-500">PRESENTE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- [🖥️ TRABAJO EN LA SALA] -->
+        <section class="glass rounded-3xl p-6 md:p-8 shadow-lg border-t-8 border-t-emerald-500">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">🖥️ TRABAJO EN LA SALA</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-4 text-emerald-800">Mi solución con IA 🤖📊</h2>
+            <p class="text-lg text-slate-700 mb-6 bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                ¡Atención tripulantes de 4°! Excel es como un gran cuaderno de cuadritos mágicos. Sigue los pasos de nuestra misión de hoy:
+            </p>
+
+            <div class="space-y-6">
+                <!-- Paso 1 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-emerald-600 mb-3 flex items-center gap-2">
+                        <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-lg text-sm">Paso 1</span>
+                        Genera tu lista con IA 🤖
+                    </h3>
+                    <p class="text-slate-700 mb-2">Abre tu IA y pega este mensaje exacto:</p>
+                    <blockquote class="bg-slate-100 border-l-4 border-emerald-400 p-3 italic text-sm text-slate-600 rounded-r-lg mb-2">
+                        "Crea una tabla con 6 medios de comunicación: 3 antiguos (señales de humo, palomas mensajeras, telégrafo) y 3 modernos (celular, email, WhatsApp). Para cada uno incluye: Nombre, Época (Antiguo o Moderno), ¿Cómo funciona? (una frase muy corta), y un Dato curioso. Separa cada columna con | y cada fila con un salto de línea. Usa palabras fáciles para niños de 9 años."
+                    </blockquote>
+                    <p class="text-sm text-orange-600 font-medium">⚠️ Si la IA te da palabras difíciles, dile: "Hazlo más corto para un niño de 4° grado".</p>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-emerald-600 mb-3 flex items-center gap-2">
+                        <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-lg text-sm">Paso 2</span>
+                        Organiza tu tabla en Excel 📊
+                    </h3>
+                    <ul class="list-decimal pl-5 space-y-2 text-slate-700">
+                        <li>Copia los datos de la IA y pégalos en Excel desde el cuadrito <strong>A1</strong>.</li>
+                        <li>Selecciona los títulos (A1 a D1). Ponles: Color azul, letras blancas, tipo Arial, tamaño 12, ¡bien centraditos!</li>
+                        <li>Para los datos (A2 a D7): Tipo Arial, tamaño 11, centrados.</li>
+                        <li>Pinta de <strong>amarillo</strong> las filas que digan "Antiguo". Pinta de <strong>verde</strong> las que digan "Moderno".</li>
+                    </ul>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-emerald-600 mb-3 flex items-center gap-2">
+                        <span class="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-lg text-sm">Paso 3</span>
+                        Cálculos sencillos ⚙️
+                    </h3>
+                    <ul class="list-decimal pl-5 space-y-2 text-slate-700">
+                        <li>En F1 escribe: <strong>Conteo</strong>. En G1 escribe: <strong>Total</strong>.</li>
+                        <li>En G2 escribe la suma de antiguos: <code class="bg-slate-100 px-2 rounded text-blue-600">=3+0</code></li>
+                        <li>En G3 escribe la suma de modernos: <code class="bg-slate-100 px-2 rounded text-blue-600">=3+0</code></li>
+                        <li>En G4 calcula el gran total: <code class="bg-slate-100 px-2 rounded text-blue-600">=3+3</code></li>
+                    </ul>
+                    <p class="text-sm mt-3 bg-blue-50 p-2 rounded text-blue-800">💡 Tip: Escribimos operaciones directas para practicar mates con nuestra tabla.</p>
+                </div>
+
+                <!-- Paso Final -->
+                <div class="bg-slate-800 p-5 rounded-2xl shadow-sm text-white hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-emerald-400 mb-2">💾 Paso final: Guardar</h3>
+                    <p class="mb-2">Guarda tu archivo así: <code class="bg-slate-700 px-2 py-1 rounded text-yellow-300">4_comunicacion_060526_TuNombre.xlsx</code></p>
+                    <div class="mt-4 border-t border-slate-600 pt-3">
+                        <p class="text-yellow-300 font-bold">✨ Reto avanzado:</p>
+                        <p class="text-sm">Crea una columna nueva (E) que diga "¿Lo usas?". Escribe Sí o No. ¡Pinta de verde donde diga Sí!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- GAMIFICACIÓN (Micro-Quiz) -->
+        <section class="glass rounded-3xl p-6 md:p-8 shadow-lg border-t-8 border-t-pink-500">
+            <h2 class="text-2xl font-bold mb-6 text-pink-700 text-center">🎮 Mini Reto Tecnológico</h2>
+            <div id="quiz-container" class="max-w-2xl mx-auto space-y-6">
+                <!-- Preguntas se inyectan con JS -->
+            </div>
+            <div id="quiz-result" class="hidden text-center mt-6 p-4 bg-green-100 border-2 border-green-400 rounded-2xl text-green-800 font-bold text-xl pop">
+                ¡Felicidades! Eres un experto en tecnología. 🌟
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- [🔍 INVESTIGACIÓN] -->
+            <section class="glass rounded-3xl p-6 shadow-lg border-l-8 border-l-yellow-400">
+                <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">🔍 INVESTIGACIÓN</span>
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Pregunta para el cuaderno:</h3>
+                <p class="text-lg text-slate-600 italic mb-4">"¿Cuál fue el primer mensaje de texto (SMS) enviado desde un celular en la historia y qué decía?"</p>
+                <p class="text-sm text-slate-500">Busca en Google y anota la respuesta en tu cuaderno.</p>
+            </section>
+
+            <!-- [📄 TAREA EN HOJA SUELTA] -->
+            <section class="glass rounded-3xl p-6 shadow-lg border-l-8 border-l-red-400">
+                <span class="bg-red-400 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3 inline-block">📄 TAREA EN HOJA SUELTA</span>
+                <div class="flex items-center justify-center h-full pb-6 text-center">
+                    <div>
+                        <span class="text-5xl block mb-2">🎉</span>
+                        <h3 class="text-2xl font-bold text-slate-800">¡Esta semana no hay tarea!</h3>
+                        <p class="text-slate-600">Descansa y diviértete aprendiendo.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- SECCIÓN 4: FOOTER OBLIGATORIO -->
+    <footer class="max-w-5xl mx-auto mt-12 bg-slate-900 text-slate-300 py-6 rounded-t-3xl text-center shadow-2xl border-t-4 border-indigo-500">
+        <p class="font-bold tracking-wide">© 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática</p>
+    </footer>
+
+    <script>
+        // Función Obligatoria Copiar Enlace
+        function copiarEnlace(){
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = document.getElementById('toastCopiado');
+                if(t){
+                    t.classList.remove('hidden');
+                    setTimeout(()=> t.classList.add('hidden'), 2000);
+                } else {
+                    alert("Enlace copiado ✅");
+                }
+            }).catch(() => {
+                alert("No se pudo copiar automáticamente. Copia el enlace manualmente desde la barra del navegador.");
+            });
+        }
+
+        // Lógica del Micro-Quiz
+        const questions = [
+            {
+                question: "1. ¿Qué medio se usaba en el PASADO para enviar un mensaje urgente?",
+                options: ["Un correo electrónico (Email)", "Señales de humo", "Un mensaje de WhatsApp"],
+                correct: 1
+            },
+            {
+                question: "2. ¿Cuál es el cambio MÁS importante en la comunicación hoy?",
+                options: ["Los mensajes llegan súper rápido (al instante).", "El papel es de colores.", "Los caballos corren más rápido."],
+                correct: 0
+            },
+            {
+                question: "3. Si usas Excel para hacer una lista en el colegio, ¿Qué estás usando?",
+                options: ["Medios de transporte", "Herramientas de cocina", "Las TIC (Tecnología)"],
+                correct: 2
+            }
+        ];
+
+        let correctCount = 0;
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = "bg-white/80 p-5 rounded-2xl shadow border border-pink-100";
+                
+                let optionsHTML = '';
+                q.options.forEach((opt, optIndex) => {
+                    optionsHTML += `
+                        <button onclick="checkAnswer(this, ${index}, ${optIndex})" 
+                                class="w-full text-left p-3 my-2 rounded-xl border-2 border-slate-200 hover:border-pink-400 hover:bg-pink-50 transition-all font-medium text-slate-700">
+                            ${opt}
+                        </button>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">${q.question}</h3>
+                    <div class="options-group" id="q-${index}">
+                        ${optionsHTML}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function checkAnswer(btn, qIndex, optIndex) {
+            const parent = document.getElementById(`q-${qIndex}`);
+            const buttons = parent.querySelectorAll('button');
+            
+            // Disable all buttons in this question
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.classList.add('opacity-70', 'cursor-not-allowed');
+            });
+
+            if (questions[qIndex].correct === optIndex) {
+                // Correct
+                btn.classList.remove('border-slate-200', 'hover:bg-pink-50', 'text-slate-700');
+                btn.classList.add('bg-green-500', 'text-white', 'border-green-600', 'pop');
+                correctCount++;
+            } else {
+                // Incorrect
+                btn.classList.remove('border-slate-200', 'text-slate-700');
+                btn.classList.add('bg-red-500', 'text-white', 'border-red-600', 'vibrate');
+                // Highlight correct
+                buttons[questions[qIndex].correct].classList.remove('border-slate-200');
+                buttons[questions[qIndex].correct].classList.add('bg-green-200', 'text-green-900', 'border-green-400');
+            }
+
+            if(correctCount === questions.length) {
+                document.getElementById('quiz-result').classList.remove('hidden');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+        });
+    </script>
+</body>
+</html>
