@@ -3,248 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clase: Plataforma Educativa UNOi - Grado 4</title>
+    <title>Clase: La Línea de Tiempo y la Comunicación</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            background-attachment: fixed;
-            min-height: 100vh;
-        }
-        
-        /* Glassmorphism Utilities */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.45);
+        body { font-family: 'Nunito', sans-serif; }
+        /* Efecto Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
-        /* 3D Flip Cards CSS */
-        .perspective-1000 { perspective: 1000px; }
-        .transform-style-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
-        
+        /* Tarjetas 3D animadas */
+        .flip-card { perspective: 1000px; }
         .flip-card-inner {
-            transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
         }
-        .group:hover .flip-card-inner {
-            transform: rotateY(180deg);
+        .flip-card:hover .flip-card-inner { transform: rotateY(180deg); }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
         }
-
-        /* Animations */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .floating { animation: float 3s ease-in-out infinite; }
+        .flip-card-back { transform: rotateY(180deg); }
         
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+        /* Animación de pulso continuo */
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
-        .shake-error { animation: shake 0.4s ease-in-out; }
+        .animate-pulse-soft { animation: pulse-soft 2s infinite; }
     </style>
 </head>
-<body class="p-4 md:p-8 text-slate-800">
+<body class="bg-gradient-to-br from-blue-200 via-purple-100 to-green-100 min-h-screen text-slate-800 p-4 md:p-8">
 
+    <!-- ========================================== -->
+    <!-- BARRA DE NAVEGACIÓN OBLIGATORIA (RUTAS)    -->
+    <!-- ========================================== -->
     <div class="max-w-5xl mx-auto flex justify-end gap-3 mb-4">
         <a href="../../../index.html"
-           class="bg-slate-800/70 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 backdrop-blur">
+           class="bg-slate-800/70 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 backdrop-blur font-bold flex items-center">
            ⬅ Inicio (Grado)
         </a>
-
+      
         <a href="../../index.html"
-           class="bg-purple-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300">
+           class="bg-purple-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 font-bold flex items-center">
            ⬅ Menú del Periodo
         </a>
-
+      
         <button type="button" onclick="copiarEnlace()"
-           class="bg-emerald-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300">
+           class="bg-emerald-600 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 font-bold flex items-center">
            🔗 Copiar enlace
         </button>
     </div>
-
-    <div id="toastCopiado" class="fixed top-6 right-6 hidden z-50 bg-black/80 text-white px-4 py-3 rounded-xl shadow-lg backdrop-blur">
+      
+    <div id="toastCopiado" class="fixed top-6 right-6 hidden bg-black/80 text-white px-6 py-3 rounded-xl shadow-2xl backdrop-blur font-bold z-50">
         Enlace copiado ✅
     </div>
 
-    <header class="max-w-5xl mx-auto glass-card rounded-3xl p-8 text-center mb-12 relative overflow-hidden">
-        <div class="absolute -top-10 -left-10 text-9xl opacity-20 floating">🚀</div>
-        <div class="absolute -bottom-10 -right-10 text-9xl opacity-20 floating" style="animation-delay: 1.5s;">💻</div>
+    <!-- ========================================== -->
+    <!-- SECCIÓN 1: HERO IMPACTANTE                 -->
+    <!-- ========================================== -->
+    <header class="max-w-5xl mx-auto glass rounded-3xl p-8 mb-10 shadow-xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-300 rounded-full blur-3xl opacity-50 -mr-10 -mt-10"></div>
+        <div class="absolute bottom-0 left-0 w-32 h-32 bg-blue-400 rounded-full blur-3xl opacity-50 -ml-10 -mb-10"></div>
         
-        <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700 drop-shadow-sm mb-4">
-            ¡Descubriendo Santillana UNOi!
-        </h1>
-        <h2 class="text-2xl font-bold text-slate-700">Colegio Santa Mariana de Jesús</h2>
-        <h3 class="text-xl font-semibold text-pink-600 mt-1">Prof. William Fdo Bernal</h3>
-        
-        <div class="mt-8 bg-white/60 rounded-2xl p-5 inline-block shadow-sm border border-white">
-            <p class="text-lg md:text-xl text-blue-900 font-bold flex items-center gap-3">
-                <span class="text-3xl">🎯</span> 
-                Objetivo: Aprender a usar nuestras "llaves mágicas" para entrar a la plataforma y explorar sus tesoros.
-            </p>
+        <div class="relative z-10 text-center">
+            <h3 class="text-sm md:text-base font-bold text-slate-500 uppercase tracking-widest mb-2">Colegio Santa Mariana de Jesús | Prof. William Fdo Bernal</h3>
+            <span class="inline-block bg-blue-500 text-white px-4 py-1 rounded-full text-sm font-bold mb-4 shadow-md">Grado 4°</span>
+            
+            <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-600 mb-6 drop-shadow-sm">
+                ¡Viaje en el Tiempo! 🕰️
+            </h1>
+            
+            <div class="bg-white/60 p-6 rounded-2xl border border-white/50 shadow-sm max-w-2xl mx-auto backdrop-blur-sm">
+                <h2 class="text-xl font-bold text-slate-700 mb-2">🎯 Nuestro Objetivo Hoy:</h2>
+                <p class="text-lg text-slate-600">
+                    Aprender qué es una línea de tiempo y organizar los inventos de comunicación usando Excel y la Inteligencia Artificial. ¡Seremos relojeros de la historia!
+                </p>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto space-y-12">
+    <main class="max-w-5xl mx-auto space-y-10">
 
-        <section class="glass-card rounded-3xl p-6 md:p-10 shadow-xl">
-            <h2 class="text-3xl font-black text-center text-blue-800 mb-8">🎮 Simulador de Ingreso Secreto</h2>
-            
-            <div class="flex flex-col md:flex-row gap-8 items-center justify-center">
-                
-                <div id="loginForm" class="bg-white/80 rounded-2xl p-8 shadow-lg w-full max-w-md border-2 border-blue-200 transition-all duration-500">
-                    <div class="text-center mb-6">
-                        <div class="w-20 h-20 bg-blue-600 rounded-full mx-auto flex items-center justify-center text-white text-4xl shadow-inner mb-3">🎓</div>
-                        <h3 class="text-2xl font-bold text-slate-800">Santillana UNOi</h3>
-                        <p class="text-sm text-slate-500">Colegio virtual</p>
-                    </div>
-
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1">👤 Usuario (Tu carnet virtual)</label>
-                            <input type="text" id="simUser" placeholder="Ej: wbernal_estudiante" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none transition-colors text-lg">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-1">🔑 Contraseña (Palabra secreta)</label>
-                            <input type="password" id="simPass" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-purple-500 focus:outline-none transition-colors text-lg">
-                        </div>
-                        <button onclick="simularIngreso()" class="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg">
-                            Ingresar a mi clase
-                        </button>
-                    </div>
-                    <p id="loginError" class="text-red-500 text-sm font-bold text-center mt-3 hidden">¡Debes escribir tu usuario y contraseña!</p>
-                </div>
-
-                <div id="canvasContainer" class="w-full max-w-md h-80 bg-slate-900 rounded-2xl shadow-xl border-4 border-slate-800 flex items-center justify-center relative overflow-hidden hidden transition-all duration-500">
-                    <canvas id="successCanvas" width="400" height="300" class="absolute inset-0"></canvas>
-                    <div id="canvasText" class="relative z-10 text-center text-white hidden">
-                        <div class="text-6xl mb-2">🎉</div>
-                        <h3 class="text-3xl font-black text-green-400">¡Acceso Concedido!</h3>
-                        <p class="text-lg mt-2">Bienvenido a la plataforma</p>
-                        <button onclick="resetSimulador()" class="mt-4 bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg backdrop-blur transition-colors">Volver a intentar</button>
-                    </div>
-                </div>
-
+        <!-- ========================================== -->
+        <!-- SECCIÓN: COPIAR AL CUADERNO                -->
+        <!-- ========================================== -->
+        <section class="glass rounded-3xl p-8 shadow-lg border-l-8 border-l-yellow-400 hover:shadow-2xl transition-all duration-300">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full shadow-sm">📝 COPIAR AL CUADERNO</span>
+            </div>
+            <h2 class="text-2xl font-bold mb-4 text-slate-800">1. ¿Qué es una Línea de Tiempo? 📏</h2>
+            <div class="bg-yellow-50 p-6 rounded-2xl border border-yellow-200">
+                <p class="text-lg mb-4">
+                    La <strong>semana 3</strong> vimos "La Evolución de la Comunicación". ¡Hoy vamos a organizar todo eso!<br>
+                    Una línea de tiempo es un dibujo que nos ayuda a ordenar la historia desde lo más <strong>Antiguo</strong> hasta lo <strong>Actual</strong>.
+                </p>
+                <ul class="space-y-3 text-lg font-medium text-slate-700">
+                    <li class="flex items-center gap-2">🦕 <strong>Hace muchos años:</strong> Cosas de la prehistoria.</li>
+                    <li class="flex items-center gap-2">⏳ <strong>Antes:</strong> Lo que pasó en el pasado (como las cartas de papel).</li>
+                    <li class="flex items-center gap-2">📱 <strong>Hoy / Actual:</strong> Lo que usamos ahora (Celulares, Internet).</li>
+                    <li class="flex items-center gap-2">🚀 <strong>Después:</strong> ¡El futuro!</li>
+                </ul>
             </div>
         </section>
 
-        <section class="glass-card rounded-3xl p-6 md:p-10 shadow-xl">
-            <h2 class="text-3xl font-black text-center text-purple-800 mb-2">🧭 ¿Qué hay dentro de la plataforma?</h2>
-            <p class="text-center text-slate-600 mb-8 font-semibold text-lg">Pasa el ratón (o toca) sobre los cofres para descubrir sus secretos.</p>
+        <!-- ========================================== -->
+        <!-- SECCIÓN: INTERACTUAR EN EL PC (Data Lab)   -->
+        <!-- ========================================== -->
+        <section class="glass rounded-3xl p-8 shadow-lg border-l-8 border-l-blue-500 hover:shadow-2xl transition-all duration-300">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-blue-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">💻 INTERACTUAR EN EL PC</span>
+            </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
-                
-                <div class="group h-64 cursor-pointer">
-                    <div class="relative w-full h-full transform-style-3d flip-card-inner rounded-2xl shadow-lg">
-                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-yellow-100 to-yellow-300 rounded-2xl flex flex-col items-center justify-center border-4 border-yellow-400">
-                            <span class="text-6xl mb-4 floating">📚</span>
-                            <h3 class="text-2xl font-black text-yellow-800">Contenidos</h3>
-                        </div>
-                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-yellow-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center border-4 border-yellow-400">
-                            <h3 class="text-xl font-black text-yellow-200 mb-2">El Gran Libro</h3>
-                            <p class="text-white text-lg">Aquí están las lecturas, explicaciones del profe y los temas de la clase. ¡Es nuestra biblioteca virtual!</p>
-                        </div>
+            <h2 class="text-2xl font-bold mb-2 text-slate-800">2. Laboratorio de Datos: ¡La edad de los inventos! 📊</h2>
+            <p class="text-slate-600 mb-6">Toca los botones para ver cuántos años de diferencia hay entre los inventos más famosos.</p>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Controles -->
+                <div class="flex flex-col gap-4">
+                    <button onclick="updateChart([1876, 1895, 1969, 2007], 'Años de Invención')" class="bg-gradient-to-r from-blue-500 to-blue-600 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:scale-105 transition-all">
+                        📅 Ver Año de Invención
+                    </button>
+                    <button onclick="updateChart([148, 129, 55, 17], 'Edad del Invento (Años)')" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white font-bold py-3 px-6 rounded-xl shadow-md hover:scale-105 transition-all">
+                        🎂 Ver Edad del Invento
+                    </button>
+                    <div class="bg-blue-50 p-4 rounded-xl mt-4 border border-blue-200">
+                        <p class="text-sm text-blue-800 font-bold">💡 Observa:</p>
+                        <p class="text-sm text-blue-600 mt-1">¡El teléfono tiene más de 100 años! Mientras que los celulares inteligentes son muy jóvenes.</p>
                     </div>
                 </div>
-
-                <div class="group h-64 cursor-pointer">
-                    <div class="relative w-full h-full transform-style-3d flip-card-inner rounded-2xl shadow-lg">
-                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-emerald-100 to-emerald-300 rounded-2xl flex flex-col items-center justify-center border-4 border-emerald-400">
-                            <span class="text-6xl mb-4 floating" style="animation-delay: 0.5s;">🎬</span>
-                            <h3 class="text-2xl font-black text-emerald-800">Recursos</h3>
-                        </div>
-                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-emerald-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center border-4 border-emerald-400">
-                            <h3 class="text-xl font-black text-emerald-200 mb-2">Caja de Herramientas</h3>
-                            <p class="text-white text-lg">Videos, audios, fotos y enlaces divertidos que nos ayudan a entender todo mucho mejor.</p>
-                        </div>
-                    </div>
+                <!-- Gráfico Chart.js -->
+                <div class="md:col-span-2 bg-white p-4 rounded-2xl shadow-inner border border-slate-100">
+                    <canvas id="timelineChart"></canvas>
                 </div>
-
-                <div class="group h-64 cursor-pointer">
-                    <div class="relative w-full h-full transform-style-3d flip-card-inner rounded-2xl shadow-lg">
-                        <div class="absolute w-full h-full backface-hidden bg-gradient-to-br from-rose-100 to-rose-300 rounded-2xl flex flex-col items-center justify-center border-4 border-rose-400">
-                            <span class="text-6xl mb-4 floating" style="animation-delay: 1s;">✍️</span>
-                            <h3 class="text-2xl font-black text-rose-800">Actividades</h3>
-                        </div>
-                        <div class="absolute w-full h-full backface-hidden rotate-y-180 bg-rose-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center border-4 border-rose-400">
-                            <h3 class="text-xl font-black text-rose-200 mb-2">¡A Jugar y Practicar!</h3>
-                            <p class="text-white text-lg">Aquí hacemos las tareas, los juegos, los exámenes y demostramos todo lo que hemos aprendido.</p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </section>
 
-        <section class="bg-indigo-900 rounded-3xl p-8 shadow-2xl text-white relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
-
-            <div class="relative z-10">
-                <h2 class="text-3xl font-black text-center mb-8">🧠 Reto Final del Explorador</h2>
-                
-                <div id="quiz-container" class="max-w-2xl mx-auto bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                    
-                    <div class="quiz-step active" id="step1">
-                        <h3 class="text-2xl font-bold mb-4">1. ¿Qué es la "Contraseña"?</h3>
-                        <div class="space-y-3">
-                            <button onclick="checkAnswer(1, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">A) Es mi nombre completo.</button>
-                            <button onclick="checkAnswer(1, true, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">B) Es mi llave secreta para entrar a la plataforma.</button>
-                            <button onclick="checkAnswer(1, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">C) Es un botón de la plataforma.</button>
-                        </div>
+        <!-- ========================================== -->
+        <!-- SECCIÓN: TRABAJO EN LA SALA (Pasos)        -->
+        <!-- ========================================== -->
+        <section class="glass rounded-3xl p-8 shadow-lg border-l-8 border-l-green-500 hover:shadow-2xl transition-all duration-300">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">🖥️ TRABAJO EN LA SALA</span>
+            </div>
+            
+            <h2 class="text-2xl font-bold mb-6 text-slate-800">3. Reto en Sala: Mi solución con IA y Excel 🤖</h2>
+            
+            <div class="space-y-6">
+                <!-- Paso 1 -->
+                <div class="bg-white/80 p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-green-400 transition-colors">
+                    <h3 class="text-xl font-bold text-green-600 mb-2">🤖 Paso 1: Genera tu tabla con IA</h3>
+                    <p class="mb-3">Abre tu IA y copia este texto exacto:</p>
+                    <div class="bg-slate-800 text-green-400 font-mono text-sm p-4 rounded-xl relative group">
+                        <p id="promptText">Crea una tabla en formato TSV con exactamente 4 columnas: Evento, Ano, Secuencia, Era. Evento: nombres de inventos de comunicación (Teléfono, Radio, Internet). Ano: año de invención con números enteros (1876, 1920, 1969). Secuencia: números del 1 al 10 en orden cronológico. Era: solo valores 'Antiguo', 'Moderno' o 'Actual'. Incluye exactamente 10 filas de datos sobre historia de la comunicación más 1 fila de encabezados. Entrega SOLO la tabla en formato TSV con exactamente 10 filas de datos más 1 fila de encabezados, sin explicaciones, sin markdown, sin código, sin comillas.</p>
+                        <button onclick="copiarPrompt()" class="absolute top-2 right-2 bg-slate-600 text-white text-xs px-2 py-1 rounded hover:bg-green-500 transition-colors">Copiar</button>
                     </div>
-
-                    <div class="quiz-step hidden" id="step2">
-                        <h3 class="text-2xl font-bold mb-4">2. ¿A quién le puedes prestar tu contraseña?</h3>
-                        <div class="space-y-3">
-                            <button onclick="checkAnswer(2, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">A) A mi mejor amigo del colegio.</button>
-                            <button onclick="checkAnswer(2, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">B) A cualquier persona en internet.</button>
-                            <button onclick="checkAnswer(2, true, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">C) ¡A nadie! Es secreta y personal.</button>
-                        </div>
-                    </div>
-
-                    <div class="quiz-step hidden" id="step3">
-                        <h3 class="text-2xl font-bold mb-4">3. Si el profe deja una tarea para resolver, ¿en qué cofre la busco?</h3>
-                        <div class="space-y-3">
-                            <button onclick="checkAnswer(3, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">A) En Contenidos.</button>
-                            <button onclick="checkAnswer(3, true, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">B) En Actividades.</button>
-                            <button onclick="checkAnswer(3, false, this)" class="w-full text-left bg-white/20 hover:bg-white/30 p-4 rounded-xl transition-all font-semibold">C) En Recursos.</button>
-                        </div>
-                    </div>
-
-                    <div class="quiz-step hidden text-center" id="step-result">
-                        <div class="text-6xl mb-4">🏆</div>
-                        <h3 class="text-3xl font-black text-green-400 mb-2">¡Misión Cumplida!</h3>
-                        <p class="text-xl mb-6">Ya eres un experto navegante de la plataforma UNOi.</p>
-                        
-                        <div class="bg-black/30 p-4 rounded-xl border border-dashed border-white/50">
-                            <p class="font-bold text-yellow-300">📝 Tarea para el cuaderno:</p>
-                            <p>Dibuja cómo te imaginas que es tu carnet virtual (con tu Usuario) y un candado gigante representando tu Contraseña.</p>
-                        </div>
-                    </div>
-
+                    <p class="text-sm text-slate-500 mt-2">Pégalo en la celda <strong>A1</strong> de Excel. ¡Revisa que sean 10 filas de inventos!</p>
                 </div>
+
+                <!-- Paso 2 -->
+                <div class="bg-white/80 p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-blue-400 transition-colors">
+                    <h3 class="text-xl font-bold text-blue-600 mb-2">📊 Paso 2: Dale color a tu línea de tiempo</h3>
+                    <ul class="list-disc list-inside space-y-2 text-slate-700">
+                        <li>Pinta la columna <strong>Era (D)</strong>: Amarillo (Antiguo), Azul (Moderno), Verde (Actual).</li>
+                        <li>Centra los números de la columna <strong>Secuencia (C)</strong>.</li>
+                        <li>Pon negrita y color gris a los títulos (Fila 1).</li>
+                        <li>Ajusta el ancho de las celdas para que se lea todo.</li>
+                    </ul>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="bg-white/80 p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-purple-400 transition-colors">
+                    <h3 class="text-xl font-bold text-purple-600 mb-2">⚙️ Paso 3: Matemáticas del Tiempo</h3>
+                    <p class="mb-2">Escribe estas fórmulas en Excel para calcular los años:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-center">
+                        <div class="bg-purple-100 p-3 rounded-lg border border-purple-200">
+                            <span class="font-bold">Celda E2:</span><br>
+                            <code class="text-purple-700 font-black">=2024-1876</code>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-lg border border-purple-200">
+                            <span class="font-bold">Celda E3:</span><br>
+                            <code class="text-purple-700 font-black">=1969-1876</code>
+                        </div>
+                        <div class="bg-purple-100 p-3 rounded-lg border border-purple-200">
+                            <span class="font-bold">Celda E4:</span><br>
+                            <code class="text-purple-700 font-black">=50+25</code>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paso 4 -->
+                <div class="bg-white/80 p-6 rounded-2xl shadow-sm border border-slate-200 hover:border-red-400 transition-colors">
+                    <h3 class="text-xl font-bold text-red-500 mb-2">💾 Paso Final: Guarda y Reto Extra</h3>
+                    <p class="mb-2">Guarda tu archivo así: <code class="bg-slate-100 px-2 py-1 rounded text-red-600 font-bold">4_lineatiempo_120526_tunombre.xlsx</code></p>
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-r-lg mt-3">
+                        <p class="font-bold text-yellow-800">✨ Reto avanzado:</p>
+                        <p class="text-yellow-700">Inventa una fila 12 con un invento del futuro, ponle Secuencia 11, Era "Futuro" y píntala de morado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN: INVESTIGACIÓN Y TAREA             -->
+        <!-- ========================================== -->
+        <section class="grid md:grid-cols-2 gap-6">
+            
+            <!-- Columna Izquierda: Investigación -->
+            <div class="glass rounded-3xl p-8 shadow-lg border-t-8 border-t-orange-400">
+                <div class="mb-4">
+                    <span class="bg-orange-400 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">🔍 INVESTIGACIÓN</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-4">Misión Google 🕵️‍♂️</h3>
+                <p class="text-lg text-slate-600 mb-4">
+                    Abre el buscador de Google y encuentra la respuesta a esta gran pregunta:
+                </p>
+                <div class="bg-orange-50 p-4 rounded-xl border border-orange-200 font-bold text-orange-800 text-center text-lg">
+                    ¿En qué año se inventó el primer teléfono celular y quién lo hizo?
+                </div>
+            </div>
+
+            <!-- Columna Derecha: Tarea -->
+            <div class="glass rounded-3xl p-8 shadow-lg border-t-8 border-t-indigo-500 flex flex-col justify-center items-center text-center relative">
+                <div class="absolute top-6 left-6 hidden md:block animate-pulse-soft">
+                    <span class="text-6xl">⬅️</span>
+                </div>
+                <div class="absolute -top-4 md:hidden animate-bounce">
+                    <span class="text-5xl">⬆️</span>
+                </div>
+                <div class="mb-4">
+                    <span class="bg-indigo-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">📄 TAREA EN HOJA SUELTA</span>
+                </div>
+                <h3 class="text-2xl font-bold text-indigo-700 mb-2">¡Para Entregar!</h3>
+                <p class="text-lg text-slate-600 max-w-xs">
+                    Escribe la respuesta de la investigación que está a la izquierda en una hoja en blanco. No olvides poner tu <strong>Nombre</strong> y <strong>Grado</strong>.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- ========================================== -->
+        <!-- SECCIÓN: GAMIFICACIÓN (Micro-Quiz)         -->
+        <!-- ========================================== -->
+        <section class="glass rounded-3xl p-8 shadow-lg border-l-8 border-l-pink-500">
+            <h2 class="text-2xl font-bold mb-6 text-slate-800">🎮 Zona de Juego: Comprueba tu aprendizaje</h2>
+            
+            <div id="quiz-container" class="space-y-4">
+                <!-- Pregunta 1 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100" id="q1-box">
+                    <p class="font-bold text-lg mb-3">1. ¿Para qué usamos una Línea de Tiempo?</p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="checkAnswer('q1', false, this)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl transition-colors">Para dibujar animales</button>
+                        <button onclick="checkAnswer('q1', true, this)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl transition-colors">Para ordenar la historia</button>
+                    </div>
+                </div>
+                
+                <!-- Pregunta 2 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100" id="q2-box">
+                    <p class="font-bold text-lg mb-3">2. En nuestro Excel, ¿qué color le pusimos a la Era "Actual"?</p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="checkAnswer('q2', false, this)" class="flex-1 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 py-2 rounded-xl transition-colors">Amarillo</button>
+                        <button onclick="checkAnswer('q2', true, this)" class="flex-1 bg-green-100 hover:bg-green-200 text-green-800 py-2 rounded-xl transition-colors">Verde claro</button>
+                    </div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100" id="q3-box">
+                    <p class="font-bold text-lg mb-3">3. ¿Qué operador usamos en Excel para restar los años?</p>
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button onclick="checkAnswer('q3', true, this)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl transition-colors">El signo Menos (-)</button>
+                        <button onclick="checkAnswer('q3', false, this)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2 rounded-xl transition-colors">El signo Más (+)</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="quiz-result" class="hidden mt-6 bg-gradient-to-r from-green-400 to-emerald-500 text-white p-4 rounded-xl text-center font-bold text-xl shadow-lg animate-pulse-soft">
+                ¡Excelente trabajo, joven relojero de la historia! 🏆
             </div>
         </section>
 
     </main>
 
-    <footer class="max-w-5xl mx-auto mt-12 bg-slate-900 text-white text-center py-6 rounded-t-3xl shadow-inner">
-        <p class="font-bold tracking-wide">© 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática</p>
+    <!-- ========================================== -->
+    <!-- FOOTER OBLIGATORIO                         -->
+    <!-- ========================================== -->
+    <footer class="mt-16 bg-slate-900 text-slate-400 text-center py-8 rounded-t-3xl shadow-inner">
+        <p class="font-medium text-sm md:text-base">
+            © 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática
+        </p>
     </footer>
 
+    <!-- ========================================== -->
+    <!-- SCRIPTS INTERACTIVOS                       -->
+    <!-- ========================================== -->
     <script>
-        // ----------------------------------------------------
         // FUNCIÓN OBLIGATORIA: Copiar Enlace
-        // ----------------------------------------------------
         function copiarEnlace() {
             const url = window.location.href;
             navigator.clipboard.writeText(url).then(() => {
@@ -260,134 +321,132 @@
             });
         }
 
-        // ----------------------------------------------------
-        // LÓGICA DEL SIMULADOR CONCEPTUAL Y CANVAS
-        // ----------------------------------------------------
-        const canvas = document.getElementById('successCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let animationId;
-
-        class Particle {
-            constructor() {
-                this.x = canvas.width / 2;
-                this.y = canvas.height / 2;
-                this.size = Math.random() * 8 + 2;
-                this.speedX = Math.random() * 6 - 3;
-                this.speedY = Math.random() * 6 - 3;
-                this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.size > 0.1) this.size -= 0.1;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function animateCanvas() {
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.2)'; // Tailwind slate-900 with opacity for trail
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            if(particles.length < 100) {
-                for(let i=0; i<5; i++){
-                    particles.push(new Particle());
-                }
-            }
-            
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                if (particles[i].size <= 0.1) {
-                    particles.splice(i, 1);
-                    i--;
-                }
-            }
-            animationId = requestAnimationFrame(animateCanvas);
-        }
-
-        function simularIngreso() {
-            const user = document.getElementById('simUser').value;
-            const pass = document.getElementById('simPass').value;
-            const errorMsg = document.getElementById('loginError');
-            const form = document.getElementById('loginForm');
-            const canvasContainer = document.getElementById('canvasContainer');
-            const canvasText = document.getElementById('canvasText');
-
-            if(user.trim() === '' || pass.trim() === '') {
-                errorMsg.classList.remove('hidden');
-                form.classList.add('shake-error');
-                setTimeout(() => form.classList.remove('shake-error'), 400);
-                return;
-            }
-
-            errorMsg.classList.add('hidden');
-            form.classList.add('hidden');
-            canvasContainer.classList.remove('hidden');
-            
-            // Iniciar animación Canvas
-            canvas.width = canvasContainer.offsetWidth;
-            canvas.height = canvasContainer.offsetHeight;
-            particles = [];
-            animateCanvas();
-
-            // Mostrar texto de éxito
-            setTimeout(() => {
-                canvasText.classList.remove('hidden');
-            }, 500);
-        }
-
-        function resetSimulador() {
-            cancelAnimationFrame(animationId);
-            document.getElementById('simUser').value = '';
-            document.getElementById('simPass').value = '';
-            document.getElementById('canvasContainer').classList.add('hidden');
-            document.getElementById('canvasText').classList.add('hidden');
-            document.getElementById('loginForm').classList.remove('hidden');
-        }
-
-        // ----------------------------------------------------
-        // LÓGICA DEL MICRO-QUIZ GAMIFICADO
-        // ----------------------------------------------------
-        function checkAnswer(stepNum, isCorrect, btnElement) {
-            // Deshabilitar botones de este paso
-            const parent = btnElement.parentElement;
-            const buttons = parent.querySelectorAll('button');
-            buttons.forEach(btn => {
-                btn.disabled = true;
-                btn.classList.remove('hover:bg-white/30');
+        // Copiar Prompt de IA
+        function copiarPrompt() {
+            const text = document.getElementById('promptText').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("¡Instrucción para la IA copiada! Pégala en tu asistente.");
             });
+        }
 
-            if(isCorrect) {
-                btnElement.classList.remove('bg-white/20');
-                btnElement.classList.add('bg-green-500', 'text-white', 'scale-105');
-                
-                setTimeout(() => {
-                    document.getElementById('step' + stepNum).classList.add('hidden');
-                    if(stepNum < 3) {
-                        document.getElementById('step' + (stepNum + 1)).classList.remove('hidden');
-                    } else {
-                        document.getElementById('step-result').classList.remove('hidden');
+        // LOGICA DE CHART.JS (Simulador / Data Lab)
+        let chartInstance = null;
+        const ctx = document.getElementById('timelineChart').getContext('2d');
+        
+        const labels = ['Teléfono', 'Radio', 'Internet', 'Smartphone'];
+        const colors = ['#facc15', '#60a5fa', '#34d399', '#c084fc'];
+
+        function initChart() {
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Años de Invención',
+                        data: [1876, 1895, 1969, 2007],
+                        backgroundColor: colors,
+                        borderRadius: 8,
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: true, position: 'top' },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            titleFont: { size: 16 },
+                            bodyFont: { size: 14, weight: 'bold' },
+                            padding: 12,
+                            cornerRadius: 8
+                        }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: false,
+                            min: 1800,
+                            ticks: { font: { family: 'Nunito', weight: 'bold' } }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Nunito', size: 14, weight: 'bold' } }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
                     }
-                }, 1000);
+                }
+            });
+        }
+
+        function updateChart(newData, newLabel) {
+            chartInstance.data.datasets[0].data = newData;
+            chartInstance.data.datasets[0].label = newLabel;
+            
+            // Ajustar el eje Y dependiendo de si son "Años del calendario" o "Edad en años"
+            if (newLabel === 'Edad del Invento (Años)') {
+                chartInstance.options.scales.y.min = 0;
             } else {
-                btnElement.classList.remove('bg-white/20');
-                btnElement.classList.add('bg-red-500', 'text-white');
-                btnElement.classList.add('shake-error');
+                chartInstance.options.scales.y.min = 1800;
+            }
+            
+            chartInstance.update();
+        }
+
+        // Inicializar gráfico al cargar
+        window.onload = initChart;
+
+        // LÓGICA DEL MICRO-QUIZ
+        let score = 0;
+        let answeredQuestions = { q1: false, q2: false, q3: false };
+
+        function checkAnswer(questionId, isCorrect, btnElement) {
+            if (answeredQuestions[questionId]) return; // Evitar doble clic
+            
+            answeredQuestions[questionId] = true;
+            const box = document.getElementById(questionId + '-box');
+            
+            if (isCorrect) {
+                btnElement.classList.replace('bg-slate-100', 'bg-green-500');
+                btnElement.classList.replace('text-slate-700', 'text-white');
+                btnElement.classList.replace('bg-green-100', 'bg-green-500'); // Para Q2
+                btnElement.classList.replace('text-green-800', 'text-white'); // Para Q2
+                box.classList.add('border-green-400', 'bg-green-50');
+                score++;
+            } else {
+                btnElement.classList.replace('bg-slate-100', 'bg-red-500');
+                btnElement.classList.replace('text-slate-700', 'text-white');
+                btnElement.classList.replace('bg-yellow-100', 'bg-red-500'); // Para Q2
+                btnElement.classList.replace('text-yellow-800', 'text-white'); // Para Q2
+                box.classList.add('border-red-400', 'bg-red-50');
                 
-                setTimeout(() => {
-                    btnElement.classList.remove('bg-red-500', 'text-white', 'shake-error');
-                    btnElement.classList.add('bg-white/20');
-                    buttons.forEach(btn => {
-                        btn.disabled = false;
-                        btn.classList.add('hover:bg-white/30');
-                    });
-                }, 1000);
+                // Efecto de vibración
+                box.style.transform = 'translateX(-10px)';
+                setTimeout(() => box.style.transform = 'translateX(10px)', 100);
+                setTimeout(() => box.style.transform = 'translateX(-10px)', 200);
+                setTimeout(() => box.style.transform = 'translateX(0)', 300);
+            }
+
+            // Deshabilitar otros botones en la misma pregunta
+            const siblings = btnElement.parentElement.children;
+            for(let sibling of siblings) {
+                sibling.disabled = true;
+                sibling.classList.remove('hover:bg-slate-200', 'hover:bg-yellow-200', 'hover:bg-green-200');
+                sibling.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            btnElement.classList.remove('opacity-50');
+
+            // Mostrar resultado final si terminó
+            if (answeredQuestions.q1 && answeredQuestions.q2 && answeredQuestions.q3) {
+                const resultDiv = document.getElementById('quiz-result');
+                resultDiv.classList.remove('hidden');
+                if (score === 3) {
+                    resultDiv.innerHTML = "¡Puntaje Perfecto! Eres un experto del tiempo. 🏆";
+                } else {
+                    resultDiv.innerHTML = `Lograste ${score} de 3. ¡Buen trabajo, sigue practicando! 🌟`;
+                    resultDiv.classList.replace('from-green-400', 'from-blue-400');
+                    resultDiv.classList.replace('to-emerald-500', 'to-indigo-500');
+                }
             }
         }
     </script>
