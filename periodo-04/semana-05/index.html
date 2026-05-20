@@ -1,1 +1,523 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>Clase Interactiva: Evolución de los Medios de Comunicación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #6d28d9 50%, #db2777 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        h1, h2, h3, .font-title {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        /* Animación de flecha apuntando a la izquierda */
+        @keyframes bounce-left {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-15px); }
+        }
+        .animate-bounce-left {
+            animation: bounce-left 1.5s infinite;
+        }
+        /* Efecto Flip Card */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+        .group:hover .group-hover\:rotate-y-180 { transform: rotateY(180deg); }
+    </style>
+</head>
+<body class="text-slate-800 pb-10">
+
+    <!-- ==========================================
+         BARRA DE NAVEGACIÓN (NO TOCAR RUTAS)
+         ========================================== -->
+    <div class="max-w-6xl mx-auto flex justify-end gap-3 mb-4 mt-6 px-4">
+        <a href="../../../index.html"
+           class="bg-slate-800/70 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 backdrop-blur font-bold flex items-center gap-2 border border-white/20">
+           ⬅ Inicio (Grado)
+        </a>
+      
+        <a href="../../index.html"
+           class="bg-purple-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 font-bold flex items-center gap-2 border border-purple-400/50">
+           ⬅ Menú del Periodo
+        </a>
+      
+        <button type="button" onclick="copiarEnlace()"
+           class="bg-emerald-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-all duration-300 font-bold flex items-center gap-2 border border-emerald-400/50">
+           🔗 Copiar enlace
+        </button>
+    </div>
+
+    <!-- Toast de copiado -->
+    <div id="toastCopiado" class="fixed top-6 right-6 hidden bg-black/80 text-white px-6 py-3 rounded-xl shadow-2xl backdrop-blur z-50 font-bold flex items-center gap-2 border border-emerald-500">
+        Enlace copiado ✅
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 space-y-8">
+
+        <!-- ==========================================
+             SECCIÓN 1: HERO IMPACTANTE
+             ========================================== -->
+        <header class="glass rounded-3xl p-8 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+            
+            <p class="text-sm font-bold text-purple-600 tracking-widest uppercase mb-2">Colegio Santa Mariana de Jesús</p>
+            <h1 class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-purple-700 mb-4 drop-shadow-sm">
+                ¡Viaje en el tiempo! 🚀<br><span class="text-4xl md:text-5xl text-slate-700">Los Medios de Comunicación</span>
+            </h1>
+            
+            <div class="flex justify-center items-center gap-2 mb-6">
+                <span class="bg-indigo-100 text-indigo-800 px-4 py-1.5 rounded-full font-bold text-sm">👨‍🏫 Prof. William Fdo Bernal</span>
+                <span class="bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full font-bold text-sm">💻 Tecnología e Informática</span>
+                <span class="bg-pink-100 text-pink-800 px-4 py-1.5 rounded-full font-bold text-sm">🎒 Grado 4°</span>
+            </div>
+
+            <div class="bg-gradient-to-r from-amber-100 to-orange-100 p-6 rounded-2xl border border-amber-200 shadow-inner max-w-3xl mx-auto">
+                <h3 class="text-xl font-bold text-amber-800 mb-2 font-title flex items-center justify-center gap-2">
+                    🎯 Nuestro Objetivo de Hoy
+                </h3>
+                <p class="text-amber-900 text-lg">
+                    Vamos a convertirnos en historiadores digitales. Construiremos una línea de tiempo usando <strong>Excel</strong> y la <strong>Inteligencia Artificial</strong> para descubrir cómo los humanos nos hemos comunicado desde hace muchísimos años hasta llegar a TikTok y WhatsApp.
+                </p>
+            </div>
+        </header>
+
+        <!-- ==========================================
+             SECCIÓN 2: COPIAR AL CUADERNO
+             ========================================== -->
+        <section class="glass rounded-3xl p-8 border-l-8 border-l-blue-500">
+            <div class="mb-4">
+                <span class="bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-md">
+                    📝 COPIAR AL CUADERNO
+                </span>
+            </div>
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">Uniendo el pasado con el presente ⏳</h2>
+            
+            <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 mb-4">
+                <p class="text-sm text-blue-600 font-bold mb-1">🔗 Conectando con la clase anterior (Semana 4):</p>
+                <p class="text-slate-700">Recuerda que una <strong>Línea de Tiempo</strong> es como un "camino dibujado" que nos ayuda a ordenar los inventos: a la izquierda ponemos lo más viejito, y a la derecha lo más moderno.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 items-center">
+                <div>
+                    <p class="text-lg text-slate-700 leading-relaxed">
+                        <strong>¿Qué son los medios de comunicación?</strong><br>
+                        Son herramientas que usamos para enviar mensajes a otras personas, no importa si están cerca o al otro lado del mundo.
+                    </p>
+                    <ul class="mt-4 space-y-2">
+                        <li class="flex items-center gap-2"><span class="text-2xl">✉️</span> <strong>Antes:</strong> Cartas, palomas mensajeras, telégrafo.</li>
+                        <li class="flex items-center gap-2"><span class="text-2xl">📻</span> <strong>Después:</strong> Radio, televisión, periódicos.</li>
+                        <li class="flex items-center gap-2"><span class="text-2xl">📱</span> <strong>Hoy:</strong> Internet, celulares, redes sociales.</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-4 rounded-xl shadow-inner text-center border-2 border-dashed border-slate-200">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=HistoryBot&backgroundColor=E0F2FE" alt="Robot Historiador" class="w-32 h-32 mx-auto mb-2 rounded-full">
+                    <p class="text-sm font-bold text-slate-500">"¡El ser humano siempre ha buscado formas más rápidas de hablar!"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SECCIÓN 3: INTERACTUAR EN EL PC (MÓDULOS)
+             ========================================== -->
+        <section class="glass rounded-3xl p-8 border-l-8 border-l-purple-500">
+            <div class="mb-4">
+                <span class="bg-purple-500 text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-md">
+                    💻 INTERACTUAR EN EL PC
+                </span>
+            </div>
+            <h2 class="text-3xl font-bold text-slate-800 mb-6">Módulo: La Velocidad de las Palabras ⚡</h2>
+            <p class="text-slate-600 mb-6 text-lg">¿Cuánto tardaba en llegar un mensaje de "Feliz Cumpleaños" a otro país en diferentes épocas? ¡Observa la gráfica interactiva!</p>
+
+            <div class="bg-white rounded-2xl p-4 shadow-inner border border-slate-100">
+                <canvas id="chartMedios" class="w-full max-h-80"></canvas>
+            </div>
+            
+            <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 perspective-1000">
+                <!-- Tarjeta 1 -->
+                <div class="group h-40 cursor-pointer">
+                    <div class="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 bg-orange-100 rounded-xl flex flex-col items-center justify-center border-2 border-orange-200 backface-hidden shadow-md">
+                            <span class="text-4xl mb-2">🔥</span>
+                            <h3 class="font-bold text-orange-800">Señales de Humo</h3>
+                        </div>
+                        <div class="absolute inset-0 bg-orange-500 text-white rounded-xl flex flex-col items-center justify-center p-4 text-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="font-bold">Hace miles de años</p>
+                            <p class="text-sm mt-1">Solo para mensajes cortos de alerta.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 2 -->
+                <div class="group h-40 cursor-pointer">
+                    <div class="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 bg-stone-100 rounded-xl flex flex-col items-center justify-center border-2 border-stone-200 backface-hidden shadow-md">
+                            <span class="text-4xl mb-2">📜</span>
+                            <h3 class="font-bold text-stone-800">Carta a Caballo</h3>
+                        </div>
+                        <div class="absolute inset-0 bg-stone-600 text-white rounded-xl flex flex-col items-center justify-center p-4 text-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="font-bold">Año 1800</p>
+                            <p class="text-sm mt-1">¡Tardaba meses en llegar en barco o caballo!</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 3 -->
+                <div class="group h-40 cursor-pointer">
+                    <div class="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 bg-blue-100 rounded-xl flex flex-col items-center justify-center border-2 border-blue-200 backface-hidden shadow-md">
+                            <span class="text-4xl mb-2">📞</span>
+                            <h3 class="font-bold text-blue-800">Teléfono Fijo</h3>
+                        </div>
+                        <div class="absolute inset-0 bg-blue-600 text-white rounded-xl flex flex-col items-center justify-center p-4 text-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="font-bold">Año 1876</p>
+                            <p class="text-sm mt-1">Por fin escuchábamos la voz en vivo.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Tarjeta 4 -->
+                <div class="group h-40 cursor-pointer">
+                    <div class="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                        <div class="absolute inset-0 bg-emerald-100 rounded-xl flex flex-col items-center justify-center border-2 border-emerald-200 backface-hidden shadow-md">
+                            <span class="text-4xl mb-2">📱</span>
+                            <h3 class="font-bold text-emerald-800">Smartphone</h3>
+                        </div>
+                        <div class="absolute inset-0 bg-emerald-500 text-white rounded-xl flex flex-col items-center justify-center p-4 text-center rotate-y-180 backface-hidden shadow-lg">
+                            <p class="font-bold">Presente</p>
+                            <p class="text-sm mt-1">Video, audio y texto en 1 segundo a todo el planeta.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SECCIÓN 4: TRABAJO EN LA SALA
+             ========================================== -->
+        <section class="glass rounded-3xl p-8 border-l-8 border-l-pink-500">
+            <div class="mb-4">
+                <span class="bg-pink-500 text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-md">
+                    🖥️ TRABAJO EN LA SALA
+                </span>
+            </div>
+            
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">Reto: Viajeros del Tiempo con IA y Excel 🚀</h2>
+            <p class="text-slate-600 mb-8 text-lg"><strong>Herramientas:</strong> Excel (la gran sábana de cuadros) + Inteligencia Artificial</p>
+
+            <div class="space-y-6">
+                <!-- Paso 1 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-bold text-pink-600 mb-3 flex items-center gap-2">
+                        <span class="bg-pink-100 text-pink-600 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                        🤖 Pide datos a la IA
+                    </h3>
+                    <p class="text-slate-700 mb-3">Abre tu asistente de IA (ChatGPT o Gemini) y cópiale <strong>exactamente</strong> este mensaje (prompt):</p>
+                    <div class="bg-slate-800 text-green-400 p-4 rounded-xl font-mono text-sm relative group">
+                        <button onclick="copiarPrompt(this)" class="absolute top-2 right-2 bg-white/20 hover:bg-white/40 text-white px-2 py-1 rounded text-xs transition-colors">Copiar</button>
+                        "Genera una tabla con la evolución de los medios de comunicación. Columnas: Orden, Año, Medio, Palabra clave. Entrega SOLO la tabla en formato TSV con exactamente 10 filas de datos más 1 fila de encabezados, sin explicaciones, sin markdown, sin código, sin comillas. Usa tabulaciones reales como separador. Datos limpios y realistas. Encabezados cortos en una sola línea."
+                    </div>
+                    <ul class="mt-4 text-slate-600 list-disc pl-5 space-y-1">
+                        <li>Copia el resultado de la IA y pégalo en la <strong>celda A1</strong> de Excel.</li>
+                        <li>Verifica que tengas datos hasta la fila 11.</li>
+                        <li class="bg-yellow-50 text-yellow-800 p-2 rounded text-sm mt-2">💡 <strong>Secreto:</strong> La tabulación "TSV" es como una tablilla invisible que separa datos en cajitas diferentes.</li>
+                    </ul>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-bold text-pink-600 mb-3 flex items-center gap-2">
+                        <span class="bg-pink-100 text-pink-600 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                        📊 Dale color a tu línea de tiempo
+                    </h3>
+                    <p class="text-slate-700 mb-3">¡Vamos a decorar la sábana cuadriculada!</p>
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="bg-gray-100 p-3 rounded-lg border-l-4 border-gray-400 text-sm"><strong>Columna A (Orden):</strong> Relleno gris claro + <b>Negrita</b></div>
+                        <div class="bg-yellow-100 p-3 rounded-lg border-l-4 border-yellow-400 text-sm"><strong>Columna B (Año):</strong> Relleno amarillo claro</div>
+                        <div class="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-600 text-sm text-blue-800"><strong>Columna C (Medio):</strong> <b>Negrita</b> + Letra Azul Oscuro</div>
+                        <div class="bg-green-50 p-3 rounded-lg border-l-4 border-green-600 text-sm text-green-700 italic"><strong>Columna D (Palabra clave):</strong> Letra Verde + Cursiva</div>
+                    </div>
+                    <p class="mt-3 text-slate-700 text-sm font-bold">✅ Selecciona todo, centra los datos y pon el tamaño de fuente en 14.</p>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                    <h3 class="text-xl font-bold text-pink-600 mb-3 flex items-center gap-2">
+                        <span class="bg-pink-100 text-pink-600 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                        ⚙️ Calcula años mágicamente con Excel
+                    </h3>
+                    <p class="text-slate-700 mb-3">Mira los años de la columna B. Excel es una calculadora gigante. En celdas vacías debajo de tu tabla, escribe exactamente esto:</p>
+                    <ul class="space-y-2 text-slate-700 font-mono text-sm bg-slate-50 p-4 rounded-xl">
+                        <li><span class="font-bold text-pink-600">=2026-1450</span> <span>(Para saber hace cuántos años existe la imprenta)</span></li>
+                        <li><span class="font-bold text-pink-600">=2026-2004</span> <span>(Para saber hace cuántos años nació Facebook)</span></li>
+                        <li><span class="font-bold text-pink-600">=2026-2016</span> <span>(Para saber hace cuántos años nació TikTok)</span></li>
+                    </ul>
+                    <p class="mt-3 text-sm text-slate-500">⚠️ Recuerda: Siempre usa el signo igual (=) al principio. ¡Excel hace la resta solo!</p>
+                </div>
+
+                <!-- Paso 4 -->
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 shadow-sm border border-green-200 hover:shadow-lg transition-all duration-300">
+                    <h3 class="text-xl font-bold text-green-700 mb-2 flex items-center gap-2">
+                        <span class="bg-green-200 text-green-800 w-8 h-8 rounded-full flex items-center justify-center text-sm">4</span>
+                        💾 Guarda tu archivo
+                    </h3>
+                    <p class="text-slate-700">Guarda así: <code class="bg-white px-2 py-1 rounded text-green-700 font-bold">4_evolucion_medios_dia_mes_tunombre.xlsx</code></p>
+                    
+                    <div class="mt-4 bg-orange-100 p-4 rounded-xl border border-orange-300">
+                        <p class="font-bold text-orange-800 flex items-center gap-2"><span>✨</span> ¡Reto Avanzado para genios!</p>
+                        <p class="text-orange-900 text-sm mt-1">Crea una columna extra llamada "Emoji", ponle un emoji a cada invento, y colorea de 🟠 Naranja las celdas de los inventos del siglo 21 (del año 2000 en adelante).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             SECCIÓN 5: INVESTIGACIÓN Y TAREA (LADO A LADO)
+             ========================================== -->
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Investigación -->
+            <section class="glass rounded-3xl p-8 border-t-8 border-t-amber-400">
+                <div class="mb-4">
+                    <span class="bg-amber-400 text-amber-900 text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-md">
+                        🔍 INVESTIGACIÓN
+                    </span>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-800 mb-3">Búsqueda rápida en Google 🕵️‍♂️</h3>
+                <p class="text-slate-700 mb-4">Busca en Internet y responde estas dos preguntas cortas en tu cuaderno:</p>
+                <div class="bg-amber-50 p-4 rounded-xl border border-amber-200">
+                    <p class="font-bold text-amber-800">1. ¿En qué año se hizo la primera llamada por un teléfono celular (móvil)?</p>
+                    <p class="font-bold text-amber-800 mt-3">2. ¿Quién la hizo?</p>
+                </div>
+            </section>
+
+            <!-- Tarea (Omitida visualmente) -->
+            <section class="glass rounded-3xl p-8 border-t-8 border-t-slate-400 flex flex-col items-center justify-center text-center relative">
+                <div class="absolute top-8">
+                    <span class="bg-slate-400 text-white text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-md">
+                        📄 TAREA EN HOJA SUELTA
+                    </span>
+                </div>
+                <div class="mt-12 flex flex-col items-center">
+                    <div class="text-6xl mb-4 animate-bounce-left">⬅️</div>
+                    <h3 class="text-xl font-bold text-slate-700">¡Esta semana NO hay tarea entregable!</h3>
+                    <p class="text-slate-500 mt-2">Solo debes resolver la investigación de la izquierda en tu cuaderno.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==========================================
+             SECCIÓN 6: GAMIFICACIÓN (QUIZ INTERACTIVO)
+             ========================================== -->
+        <section class="glass-dark text-white rounded-3xl p-8 shadow-2xl">
+            <h2 class="text-3xl font-bold mb-6 text-center text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+                🎮 Mini-Quiz de Cierre
+            </h2>
+            <div id="quizContainer" class="max-w-2xl mx-auto space-y-4">
+                <!-- Las preguntas se inyectan con JS -->
+            </div>
+            <div id="quizResult" class="hidden max-w-2xl mx-auto mt-6 bg-emerald-500/20 border border-emerald-400 p-6 rounded-2xl text-center backdrop-blur">
+                <span class="text-5xl block mb-2">🏆</span>
+                <h3 class="text-2xl font-bold text-emerald-400">¡Excelente Trabajo!</h3>
+                <p class="text-emerald-100">Has completado el viaje en el tiempo.</p>
+            </div>
+        </section>
+
+        <!-- ==========================================
+             FOOTER OFICIAL OBLIGATORIO
+             ========================================== -->
+        <footer class="bg-slate-900 text-slate-400 py-8 text-center rounded-3xl shadow-lg mt-12 border border-slate-700">
+            <p class="text-sm font-bold tracking-widest">
+                © 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática
+            </p>
+        </footer>
+
+    </div>
+
+    <!-- ==========================================
+         SCRIPTS: Lógica, Charts y Gamificación
+         ========================================== -->
+    <script>
+        // Función 1: Copiar Enlace Obligatoria
+        function copiarEnlace(){
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = document.getElementById('toastCopiado');
+                if(t){
+                    t.classList.remove('hidden');
+                    setTimeout(()=> t.classList.add('hidden'), 2000);
+                } else {
+                    alert("Enlace copiado ✅");
+                }
+            }).catch(() => {
+                alert("No se pudo copiar automáticamente. Copia el enlace manualmente desde la barra del navegador.");
+            });
+        }
+
+        // Función 2: Copiar Prompt
+        function copiarPrompt(btn) {
+            const textToCopy = "Genera una tabla con la evolución de los medios de comunicación. Columnas: Orden, Año, Medio, Palabra clave. Entrega SOLO la tabla en formato TSV con exactamente 10 filas de datos más 1 fila de encabezados, sin explicaciones, sin markdown, sin código, sin comillas. Usa tabulaciones reales como separador. Datos limpios y realistas. Encabezados cortos en una sola línea.";
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                btn.innerText = "¡Copiado!";
+                btn.classList.replace("bg-white/20", "bg-green-500");
+                setTimeout(() => {
+                    btn.innerText = "Copiar";
+                    btn.classList.replace("bg-green-500", "bg-white/20");
+                }, 2000);
+            });
+        }
+
+        // Inicializar Chart.js (Gráfico de Velocidad)
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('chartMedios').getContext('2d');
+            
+            // Creamos un gráfico de barras que muestra "Minutos que tarda en llegar un mensaje" (escala logarítmica para hacerlo visible)
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Carta en Barco (1800)', 'Telégrafo (1850)', 'Correo Postal (1950)', 'Email / WhatsApp (Hoy)'],
+                    datasets: [{
+                        label: 'Tiempo en llegar (Escala Visual)',
+                        data: [100, 40, 70, 2], // Datos representativos para niños
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.7)', // Rojo
+                            'rgba(245, 158, 11, 0.7)', // Amarillo
+                            'rgba(59, 130, 246, 0.7)', // Azul
+                            'rgba(16, 185, 129, 0.7)'  // Verde
+                        ],
+                        borderColor: [
+                            'rgb(239, 68, 68)',
+                            'rgb(245, 158, 11)',
+                            'rgb(59, 130, 246)',
+                            'rgb(16, 185, 129)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let textos = [
+                                        'Meses de viaje por el océano 🌊',
+                                        'Unas horas mediante cables ⚡',
+                                        'Días viajando en avión ✈️',
+                                        '¡1 Segundo! Viaje a la velocidad de la luz 🚀'
+                                    ];
+                                    return textos[context.dataIndex];
+                                }
+                            },
+                            titleFont: { size: 16, family: 'Nunito' },
+                            bodyFont: { size: 14, family: 'Nunito' },
+                            padding: 12
+                        }
+                    },
+                    scales: {
+                        y: { 
+                            display: false // Ocultamos los números de Y para no confundir a los niños
+                        },
+                        x: {
+                            ticks: { font: { family: 'Nunito', size: 12, weight: 'bold' } }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutBounce'
+                    }
+                }
+            });
+
+            // Lógica del Quiz
+            const preguntas = [
+                {
+                    q: "¿Qué le pedimos a la Inteligencia Artificial hoy?",
+                    options: ["Un dibujo de un perro", "Una tabla separada por TSV (tabulaciones)", "Que nos haga la tarea de matemáticas"],
+                    correct: 1
+                },
+                {
+                    q: "¿Para qué usamos Excel en esta clase?",
+                    options: ["Para ver videos", "Para jugar videojuegos", "Para acomodar datos y hacer restas mágicas de años"],
+                    correct: 2
+                },
+                {
+                    q: "Si quiero saber los años que tiene TikTok, ¿qué escribo en Excel?",
+                    options: ["=2026-2016", "Cuantos años tiene TikTok", "2026 menos 2016"],
+                    correct: 0
+                }
+            ];
+
+            const quizContainer = document.getElementById('quizContainer');
+            let answered = 0;
+
+            preguntas.forEach((pregunta, qIndex) => {
+                const block = document.createElement('div');
+                block.className = 'bg-slate-800/50 p-5 rounded-xl border border-slate-700 transition-all duration-300';
+                
+                const title = document.createElement('h4');
+                title.className = 'font-bold text-lg mb-3 text-cyan-200';
+                title.innerText = `${qIndex + 1}. ${pregunta.q}`;
+                block.appendChild(title);
+
+                const optionsGrid = document.createElement('div');
+                optionsGrid.className = 'grid gap-2';
+
+                pregunta.options.forEach((opt, oIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'text-left bg-slate-700 hover:bg-slate-600 px-4 py-3 rounded-lg text-sm font-medium transition-colors border border-slate-600 hover:border-cyan-400 focus:outline-none';
+                    btn.innerText = opt;
+                    
+                    btn.onclick = () => {
+                        // Limpiar selecciones previas
+                        Array.from(optionsGrid.children).forEach(c => {
+                            c.classList.remove('bg-emerald-600', 'bg-red-600', 'border-emerald-400', 'border-red-400', 'pointer-events-none');
+                            c.classList.add('bg-slate-700', 'border-slate-600');
+                            c.disabled = true; // Deshabilitar después de responder
+                        });
+
+                        if (oIndex === pregunta.correct) {
+                            btn.classList.replace('bg-slate-700', 'bg-emerald-600');
+                            btn.classList.replace('border-slate-600', 'border-emerald-400');
+                            block.classList.add('border-emerald-500', 'bg-emerald-900/20');
+                        } else {
+                            btn.classList.replace('bg-slate-700', 'bg-red-600');
+                            btn.classList.replace('border-slate-600', 'border-red-400');
+                            block.classList.add('border-red-500/50', 'animate-pulse');
+                            
+                            // Mostrar la correcta
+                            optionsGrid.children[pregunta.correct].classList.replace('bg-slate-700', 'bg-emerald-600');
+                        }
+
+                        answered++;
+                        if (answered === preguntas.length) {
+                            document.getElementById('quizResult').classList.remove('hidden');
+                        }
+                    };
+                    optionsGrid.appendChild(btn);
+                });
+
+                block.appendChild(optionsGrid);
+                quizContainer.appendChild(block);
+            });
+        });
+    </script>
+</body>
+</html>
