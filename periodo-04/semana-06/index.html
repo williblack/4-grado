@@ -1,1 +1,477 @@
-hola
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 11 y 12: ¡Mi colegio en internet!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%);
+            background-attachment: fixed;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-header {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes pointLeft {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-15px); }
+        }
+
+        .animate-point-left {
+            animation: pointLeft 1.5s infinite ease-in-out;
+        }
+
+        /* Ocultar barra de desplazamiento pero permitir scroll */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen pb-10">
+
+    <div class="max-w-6xl mx-auto flex justify-end gap-3 mb-4 pt-4 px-4">
+        <a href="../../../index.html" class="bg-slate-800/80 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 backdrop-blur font-bold text-sm">
+            ⬅ Inicio (Grado)
+        </a>
+        <a href="../../index.html" class="bg-purple-600/90 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 font-bold text-sm">
+            ⬅ Menú del Periodo
+        </a>
+        <button type="button" onclick="copiarEnlace()" class="bg-emerald-600/90 text-white px-4 py-2 rounded-xl shadow-lg hover:scale-105 transition-all duration-300 font-bold text-sm">
+            🔗 Copiar enlace
+        </button>
+    </div>
+
+    <div id="toastCopiado" class="fixed top-6 right-6 hidden bg-black/80 text-white px-6 py-3 rounded-xl shadow-2xl backdrop-blur font-bold z-50 transition-all">
+        Enlace copiado ✅
+    </div>
+
+    <header class="max-w-6xl mx-auto px-4 mb-8">
+        <div class="glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center gap-6 border-l-8 border-l-indigo-500">
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse"></div>
+            <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-pulse" style="animation-delay: 2s;"></div>
+            
+            <div class="flex-1 z-10 text-center md:text-left">
+                <span class="inline-block py-1 px-3 rounded-full bg-indigo-100 text-indigo-800 font-bold text-xs mb-3 shadow-sm border border-indigo-200">
+                    SEMANA 6 • CLASE 11 Y 12
+                </span>
+                <h1 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-700 mb-2 drop-shadow-sm leading-tight">
+                    ¡Mi colegio en internet!
+                </h1>
+                <h2 class="text-2xl font-bold text-slate-700 mb-4">La plataforma educativa y la IA</h2>
+                
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm font-semibold text-slate-600">
+                    <span class="flex items-center gap-1 bg-white/60 px-3 py-1 rounded-lg"><span class="text-xl">🏫</span> Colegio Santa Mariana de Jesús</span>
+                    <span class="flex items-center gap-1 bg-white/60 px-3 py-1 rounded-lg"><span class="text-xl">👨‍🏫</span> Prof. William Fdo Bernal</span>
+                    <span class="flex items-center gap-1 bg-white/60 px-3 py-1 rounded-lg"><span class="text-xl">👦👧</span> Grado 4°</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 space-y-8 z-10 relative">
+
+        <section class="glass-card rounded-3xl p-6 md:p-8 hover-lift transition-all duration-300 border-t-4 border-t-amber-400">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="bg-amber-100 text-amber-800 text-xs font-black px-3 py-1 rounded-full border border-amber-300 shadow-sm">
+                    📝 COPIAR AL CUADERNO
+                </span>
+                <h3 class="text-2xl font-bold text-amber-600">Apuntes de Clase</h3>
+            </div>
+            
+            <div class="bg-white/50 rounded-2xl p-6 text-lg text-slate-700 leading-relaxed font-medium space-y-4 shadow-inner">
+                <p>
+                    <strong class="text-indigo-600">Conectando saberes:</strong> La semana pasada (Semana 5) viajamos en el tiempo explorando los <em>Medios de Comunicación</em>. ¡Hoy daremos un salto al presente usando el internet moderno!
+                </p>
+                <hr class="border-amber-200">
+                <p>
+                    Nuestra <strong>plataforma del colegio</strong> es como nuestro salón de clases virtual. Es un lugar seguro donde los profesores comparten videos, juegos y lecturas para aprender.
+                </p>
+                <h4 class="font-bold text-slate-800 text-xl mt-4">Reglas de Oro:</h4>
+                <ul class="list-none space-y-2">
+                    <li>🔑 <strong>Mis llaves:</strong> Mi usuario y contraseña son secretos.</li>
+                    <li>👀 <strong>Ojos abiertos:</strong> Siempre leo las instrucciones del profesor.</li>
+                    <li>🚪 <strong>Cierro la puerta:</strong> Al terminar, siempre hago clic en "Cerrar sesión".</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="glass-card rounded-3xl p-6 md:p-8 hover-lift transition-all duration-300 border-t-4 border-t-blue-500">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-blue-100 text-blue-800 text-xs font-black px-3 py-1 rounded-full border border-blue-300 shadow-sm">
+                    💻 INTERACTUAR EN EL PC
+                </span>
+                <h3 class="text-2xl font-bold text-blue-600">Data Lab: Visualizando Recursos</h3>
+            </div>
+            
+            <p class="text-lg text-slate-600 font-medium mb-6">
+                Antes de ir a Excel, usemos este simulador. La Inteligencia Artificial nos puede dar diferentes tipos de listas de recursos. Haz clic en los botones para ver cómo cambian los datos en nuestro laboratorio virtual.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-1 space-y-4">
+                    <button onclick="updateChart('ia1')" class="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-left flex justify-between items-center group">
+                        <span>Generar Lista IA 1</span>
+                        <span class="bg-white/20 p-2 rounded-full group-hover:rotate-180 transition-all">🤖</span>
+                    </button>
+                    <button onclick="updateChart('ia2')" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold py-4 px-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all text-left flex justify-between items-center group">
+                        <span>Generar Lista IA 2</span>
+                        <span class="bg-white/20 p-2 rounded-full group-hover:rotate-180 transition-all">✨</span>
+                    </button>
+                    <div class="bg-white/60 p-4 rounded-2xl border border-blue-100 text-sm font-bold text-slate-600 shadow-inner">
+                        📊 Suma total de minutos: <br>
+                        <span id="totalMinutos" class="text-3xl text-blue-600 font-black">45 min</span>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-2 bg-white/80 rounded-2xl p-4 shadow-inner border border-slate-200 relative h-72">
+                    <canvas id="recursosChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card rounded-3xl p-6 md:p-8 hover-lift transition-all duration-300 border-t-4 border-t-emerald-500">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="bg-emerald-100 text-emerald-800 text-xs font-black px-3 py-1 rounded-full border border-emerald-300 shadow-sm">
+                    🖥️ TRABAJO EN LA SALA
+                </span>
+                <h3 class="text-2xl font-bold text-emerald-600">Mi solución con IA + Excel</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white/60 rounded-2xl p-5 border border-emerald-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-emerald-500 text-white font-black text-4xl opacity-10 rounded-bl-full p-6 transition-all group-hover:scale-110">1</div>
+                    <h4 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-3">🤖 Paso 1: Pedir a la IA</h4>
+                    <p class="text-slate-700 text-md font-medium mb-3">Copia y pega este texto exacto en ChatGPT o Gemini:</p>
+                    <div class="bg-slate-800 text-green-400 p-4 rounded-xl text-sm font-mono shadow-inner overflow-x-auto relative">
+                        <button onclick="copiarPrompt()" class="absolute top-2 right-2 bg-slate-600 text-white text-xs px-2 py-1 rounded hover:bg-slate-500 transition-colors">Copiar</button>
+                        <span id="promptText">Genera una tabla de 3 columnas (Recurso, Tipo, Duracion_min) con 10 filas de datos. Recurso: nombre de una actividad de plataforma escolar. Tipo: 'Video', 'Juego' o 'Lectura'. Duracion_min: número entero entre 1 y 15. Entrega SOLO la tabla en formato TSV con 10 filas + encabezados, sin markdown. Usa tabulaciones reales.</span>
+                    </div>
+                    <p class="text-slate-600 text-sm mt-3 font-semibold">💡 Pega el resultado en la celda A1 de Excel.</p>
+                </div>
+
+                <div class="bg-white/60 rounded-2xl p-5 border border-emerald-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-emerald-500 text-white font-black text-4xl opacity-10 rounded-bl-full p-6 transition-all group-hover:scale-110">2</div>
+                    <h4 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-3">📊 Paso 2: Darle color</h4>
+                    <ul class="space-y-2 text-slate-700 font-medium">
+                        <li class="flex items-start gap-2"><span class="text-emerald-500">✔️</span> Fila 1 (Títulos): Letra Negrita (B) y fondo <strong>Azul Claro</strong>.</li>
+                        <li class="flex items-start gap-2"><span class="text-emerald-500">✔️</span> Columna C (Duración): Fondo <strong>Amarillo Pálido</strong>.</li>
+                        <li class="flex items-start gap-2"><span class="text-emerald-500">✔️</span> Selecciona toda la tabla y ponle <strong>Todos los bordes</strong>.</li>
+                        <li class="flex items-start gap-2"><span class="text-emerald-500">✔️</span> Haz doble clic entre las letras de las columnas para ajustar el ancho.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white/60 rounded-2xl p-5 border border-emerald-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-emerald-500 text-white font-black text-4xl opacity-10 rounded-bl-full p-6 transition-all group-hover:scale-110">3</div>
+                    <h4 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-3">⚙️ Paso 3: Sumas en Excel</h4>
+                    <p class="text-slate-700 text-md font-medium mb-2">Usaremos Excel como calculadora directa:</p>
+                    <ul class="space-y-3 text-slate-700 font-medium">
+                        <li class="bg-indigo-50 p-2 rounded-lg border border-indigo-100"><strong>a)</strong> En la celda E2 suma los dos primeros recursos: Ej. <code>=4+7</code></li>
+                        <li class="bg-indigo-50 p-2 rounded-lg border border-indigo-100"><strong>b)</strong> En la celda E4 suma solo los videos: Ej. <code>=5+8+3</code></li>
+                        <li class="bg-indigo-50 p-2 rounded-lg border border-indigo-100"><strong>c)</strong> En la celda E8 suma TODOS los números: Ej. <code>=2+4+1+7...</code></li>
+                    </ul>
+                    <p class="text-red-500 text-xs mt-2 font-bold">⚠️ ¡Recuerda siempre empezar con el signo = !</p>
+                </div>
+
+                <div class="bg-white/60 rounded-2xl p-5 border border-emerald-100 shadow-sm relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 bg-emerald-500 text-white font-black text-4xl opacity-10 rounded-bl-full p-6 transition-all group-hover:scale-110">4</div>
+                    <h4 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-3">💾 Paso 4: Guardar y Reto</h4>
+                    <p class="text-slate-700 font-medium mb-2">Guarda tu archivo con este nombre exacto:</p>
+                    <div class="bg-slate-200 text-slate-800 p-2 rounded text-center font-bold font-mono border-2 border-slate-400 mb-4">
+                        4_mi_plataforma_tu_nombre.xlsx
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded-xl border border-yellow-300">
+                        <strong class="text-yellow-800">✨ Reto avanzado:</strong> Agrega la columna "Lo revisé". Pon ✅ o ❌. Luego suma en otra celda cuántos chulitos (✅) tienes. Ej: <code>=5+3</code>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <section class="glass-card rounded-3xl p-6 md:p-8 hover-lift transition-all duration-300 border-t-4 border-t-purple-500 h-full flex flex-col justify-center relative">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-purple-100 text-purple-800 text-xs font-black px-3 py-1 rounded-full border border-purple-300 shadow-sm">
+                        🔍 INVESTIGACIÓN
+                    </span>
+                </div>
+                <h3 class="text-2xl font-bold text-purple-600 mb-4">Misión Investigador</h3>
+                <div class="bg-purple-50 p-5 rounded-2xl border border-purple-200 flex-1">
+                    <p class="text-lg text-slate-700 font-bold mb-4">
+                        Abre Google y busca la respuesta a esta pregunta, luego escríbela en tu cuaderno:
+                    </p>
+                    <p class="text-xl text-indigo-800 font-black text-center bg-white p-4 rounded-xl shadow-sm border-2 border-dashed border-purple-300">
+                        "¿Qué es una plataforma virtual de aprendizaje y menciona 2 ejemplos famosos?"
+                    </p>
+                </div>
+            </section>
+
+            <section class="glass-card rounded-3xl p-6 md:p-8 hover-lift transition-all duration-300 border-t-4 border-t-rose-500 h-full flex flex-col justify-center items-center text-center bg-gradient-to-r from-rose-50 to-orange-50 relative overflow-hidden">
+                <div class="absolute top-4 right-4">
+                    <span class="bg-rose-100 text-rose-800 text-xs font-black px-3 py-1 rounded-full border border-rose-300 shadow-sm">
+                        📄 TAREA EN HOJA SUELTA
+                    </span>
+                </div>
+                
+                <h3 class="text-3xl font-black text-rose-600 mt-6 mb-2">¡OJO A LA TAREA!</h3>
+                <p class="text-lg text-slate-700 font-bold mb-6 z-10 relative">
+                    La tarea entregable que debes traer la próxima clase es la investigación que está aquí al lado.
+                </p>
+                
+                <div class="text-7xl text-rose-500 animate-point-left drop-shadow-lg hidden md:block">
+                    👈
+                </div>
+                <div class="text-7xl text-rose-500 animate-bounce block md:hidden mt-2">
+                    👆
+                </div>
+            </section>
+        </div>
+
+        <section class="glass-card rounded-3xl p-6 md:p-8 hover-lift transition-all duration-300 border-t-4 border-t-indigo-500 mb-10">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <span class="bg-indigo-100 text-indigo-800 text-xs font-black px-3 py-1 rounded-full border border-indigo-300 shadow-sm">
+                        🎮 GAMIFICACIÓN
+                    </span>
+                    <h3 class="text-2xl font-bold text-indigo-600">Mini-Quiz de Cierre</h3>
+                </div>
+                <span class="text-3xl">🏆</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="quizContainer">
+                <div class="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-200 text-center" id="q1-box">
+                    <p class="font-bold text-slate-700 mb-4 h-12">1. ¿A quién le puedo dar mi contraseña de la plataforma?</p>
+                    <div class="space-y-2">
+                        <button onclick="checkAnswer(1, false, this)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-xl transition-all">A mis amigos</button>
+                        <button onclick="checkAnswer(1, true, this)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-xl transition-all">A nadie, es secreta</button>
+                    </div>
+                </div>
+                <div class="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-200 text-center" id="q2-box">
+                    <p class="font-bold text-slate-700 mb-4 h-12">2. En Excel, para sumar 3 y 5 de forma directa escribo:</p>
+                    <div class="space-y-2">
+                        <button onclick="checkAnswer(2, true, this)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-xl transition-all">=3+5</button>
+                        <button onclick="checkAnswer(2, false, this)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-xl transition-all">3+5</button>
+                    </div>
+                </div>
+                <div class="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-200 text-center" id="q3-box">
+                    <p class="font-bold text-slate-700 mb-4 h-12">3. ¿Qué hago cuando termino de usar la plataforma del colegio?</p>
+                    <div class="space-y-2">
+                        <button onclick="checkAnswer(3, false, this)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-xl transition-all">Apago la pantalla</button>
+                        <button onclick="checkAnswer(3, true, this)" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2 rounded-xl transition-all">Cerrar Sesión</button>
+                    </div>
+                </div>
+            </div>
+            <div id="quizResult" class="hidden mt-6 text-center text-2xl font-black text-emerald-600 bg-emerald-100 py-3 rounded-xl border-2 border-emerald-400">
+                ¡Excelente Trabajo! 🎉 Eres un experto en plataformas.
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-900 text-slate-300 py-8 text-center mt-auto border-t-4 border-indigo-500">
+        <div class="max-w-4xl mx-auto px-4">
+            <p class="text-lg font-bold text-white tracking-wide">
+                © 2026 | Prof. William Fdo Bernal - Área de Tecnología e Informática
+            </p>
+            <p class="text-sm mt-2 text-slate-400">Colegio Santa Mariana de Jesús</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. FUNCIÓN OBLIGATORIA: COPIAR ENLACE ---
+        function copiarEnlace() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                const t = document.getElementById('toastCopiado');
+                if(t) {
+                    t.classList.remove('hidden');
+                    t.classList.add('animate-bounce');
+                    setTimeout(() => {
+                        t.classList.add('hidden');
+                        t.classList.remove('animate-bounce');
+                    }, 2500);
+                } else {
+                    alert("Enlace copiado ✅");
+                }
+            }).catch(() => {
+                alert("No se pudo copiar automáticamente. Copia el enlace manualmente desde la barra del navegador.");
+            });
+        }
+
+        // --- 2. FUNCIÓN EXTRA: COPIAR PROMPT DE IA ---
+        function copiarPrompt() {
+            const promptText = document.getElementById('promptText').innerText;
+            navigator.clipboard.writeText(promptText).then(() => {
+                alert("¡Prompt copiado! Ahora pégalo en la IA.");
+            });
+        }
+
+        // --- 3. LÓGICA DEL DATA LAB (CHART.JS) ---
+        let miGrafico;
+        const ctx = document.getElementById('recursosChart').getContext('2d');
+        
+        // Data sets simulados
+        const datasets = {
+            'ia1': {
+                label: 'Lista de Recursos (IA 1)',
+                data: [4, 3, 3], // Videos, Juegos, Lecturas
+                minutos: 45
+            },
+            'ia2': {
+                label: 'Lista de Recursos (IA 2)',
+                data: [2, 6, 2], // Videos, Juegos, Lecturas
+                minutos: 62
+            }
+        };
+
+        function initChart() {
+            miGrafico = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['🎥 Videos', '🎮 Juegos', '📖 Lecturas'],
+                    datasets: [{
+                        label: 'Cantidad de Recursos',
+                        data: datasets['ia1'].data,
+                        backgroundColor: [
+                            'rgba(239, 68, 68, 0.7)',  // Red
+                            'rgba(16, 185, 129, 0.7)', // Emerald
+                            'rgba(59, 130, 246, 0.7)'  // Blue
+                        ],
+                        borderColor: [
+                            'rgb(239, 68, 68)',
+                            'rgb(16, 185, 129)',
+                            'rgb(59, 130, 246)'
+                        ],
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(30, 41, 59, 0.9)',
+                            titleFont: { size: 16, family: 'Nunito' },
+                            bodyFont: { size: 14, font: 'Nunito', weight: 'bold' },
+                            padding: 12,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: { stepSize: 2, font: { family: 'Nunito', weight: 'bold' } }
+                        },
+                        x: {
+                            ticks: { font: { family: 'Nunito', weight: 'bold', size: 14 } }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        }
+
+        function updateChart(id) {
+            const newData = datasets[id];
+            miGrafico.data.datasets[0].data = newData.data;
+            miGrafico.update();
+            
+            // Efecto visual en el contador de minutos
+            const minElement = document.getElementById('totalMinutos');
+            minElement.style.transform = 'scale(1.2)';
+            minElement.style.color = '#10b981'; // emerald
+            setTimeout(() => {
+                minElement.innerText = newData.minutos + ' min';
+                minElement.style.transform = 'scale(1)';
+                minElement.style.color = '#2563eb'; // blue
+            }, 300);
+        }
+
+        // --- 4. LÓGICA DEL MICRO-QUIZ ---
+        let respuestasCorrectas = 0;
+        let respondidas = [false, false, false];
+
+        function checkAnswer(preguntaNum, esCorrecta, btnElement) {
+            if (respondidas[preguntaNum - 1]) return; // Ya respondió esta
+            
+            respondidas[preguntaNum - 1] = true;
+            const box = document.getElementById(`q${preguntaNum}-box`);
+            const botones = box.querySelectorAll('button');
+            
+            // Deshabilitar botones de esta pregunta
+            botones.forEach(b => {
+                b.disabled = true;
+                b.classList.remove('hover:bg-slate-200', 'bg-slate-100', 'text-slate-700');
+                if (b === btnElement) {
+                    if (esCorrecta) {
+                        b.classList.add('bg-emerald-500', 'text-white', 'shadow-lg', 'scale-105');
+                        box.classList.add('border-emerald-400', 'bg-emerald-50');
+                        respuestasCorrectas++;
+                    } else {
+                        b.classList.add('bg-red-500', 'text-white');
+                        // Efecto de temblor (vibración)
+                        box.animate([
+                            { transform: 'translateX(0)' },
+                            { transform: 'translateX(-10px)' },
+                            { transform: 'translateX(10px)' },
+                            { transform: 'translateX(0)' }
+                        ], { duration: 300 });
+                    }
+                } else {
+                    b.classList.add('bg-slate-200', 'text-slate-400', 'opacity-50');
+                }
+            });
+
+            // Verificar si terminó
+            if (respondidas.every(r => r === true)) {
+                setTimeout(() => {
+                    const resultDiv = document.getElementById('quizResult');
+                    resultDiv.classList.remove('hidden');
+                    resultDiv.classList.add('animate-bounce');
+                    if(respuestasCorrectas === 3) {
+                        resultDiv.innerHTML = "¡Puntaje Perfecto! 🎉 Eres un experto en la plataforma.";
+                    } else {
+                        resultDiv.innerHTML = `Lograste ${respuestasCorrectas} de 3. ¡Sigue practicando! 💪`;
+                        resultDiv.classList.replace('text-emerald-600', 'text-indigo-600');
+                        resultDiv.classList.replace('bg-emerald-100', 'bg-indigo-100');
+                        resultDiv.classList.replace('border-emerald-400', 'border-indigo-400');
+                    }
+                }, 500);
+            }
+        }
+
+        // Inicializar Chart al cargar la página
+        window.onload = () => {
+            initChart();
+        };
+    </script>
+</body>
+</html>
